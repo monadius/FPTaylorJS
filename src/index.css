@@ -27,3 +27,7 @@ body {
 .main-header {
   height: 2.5rem;
 }
+
+.form-control {
+  box-shadow: none !important;
+}
