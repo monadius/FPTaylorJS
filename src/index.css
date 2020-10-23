@@ -12,6 +12,18 @@ code {
     monospace;
 }
 
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
 .main-header {
   height: 2.5rem;
 }
