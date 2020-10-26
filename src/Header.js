@@ -21,7 +21,7 @@ const InfoModal = (props) => {
   );
 }
 
-class Header extends React.Component {
+class Header extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {showInfo: false};

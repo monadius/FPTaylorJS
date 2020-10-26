@@ -6,7 +6,7 @@ import Tab from 'react-bootstrap/Tab';
 import Output from './Output';
 import Results from './Results';
 
-class OutputPane extends React.Component {
+class OutputPane extends React.PureComponent {
   render() {
     return (
       <Card className="h-100">
@@ -24,10 +24,10 @@ class OutputPane extends React.Component {
           <Card.Body className="p-0">
             <Tab.Content className="h-100">
               <Tab.Pane eventKey="output" className="h-100">
-                <Output/>
+                <Output data={this.props.output}/>
               </Tab.Pane>
               <Tab.Pane eventKey="results" className="h-100 overflow-auto">
-                <Results/>
+                <Results data={this.props.results}/>
               </Tab.Pane>
             </Tab.Content>
           </Card.Body>
