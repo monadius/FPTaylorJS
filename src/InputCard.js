@@ -20,7 +20,9 @@ class InputCard extends React.Component {
           </Form>
         </Card.Header>
         <Card.Body className="p-0">
-          <Form.Control id={this.props.id} as="textarea" className="h-100 w-100" 
+          <Form.Control id={this.props.id} as="textarea" 
+            value="Initial text"
+            className="h-100 w-100" 
             style={{resize: "none", border: "none", outline: "none"}}/>
         </Card.Body>
       </Card>
