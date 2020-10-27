@@ -1,9 +1,9 @@
 import React from 'react';
 
-class Output extends React.Component {
+class Output extends React.PureComponent {
   render() {
-    const outputLines = this.props.data.map((line, i) =>
-      <div key={i}>{line}</div>);
+    const outputLines = this.props.data.map(({ty, str}, i) =>
+      <div key={i} className={ty === 1 ? '' : 'text-danger'}>{str}</div>);
     return (
       <pre className="h-100 p-2 overflow-auto">
         {outputLines}

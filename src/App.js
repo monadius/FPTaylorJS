@@ -12,16 +12,54 @@ class App extends React.Component {
     super(props);
     this.state = {
       outputLog: ["Log1"],
-      results: []
+      results: [],
+      worker: null
     };
   }
 
+  stopWorker = () => {
+    if (this.state.worker) {
+      this.state.worker.terminate();
+      this.setState(() => ({worker: null}));
+    }
+  }
+
   onRunFPTaylor = (input, config) => {
-    this.setState(state => ({outputLog: [...state.outputLog, "Log"]}));
+    if (this.state.worker) {
+      this.stopWorker();
+    }
+    else {
+      const worker = new Worker('fptaylor.js');
+      worker.onmessage = this.onWorkerMessage.bind(this);
+      worker.onerror = this.onWorkerError.bind(this);
+      worker.postMessage({input, config});
+      this.setState(() => ({worker: worker, outputLog: []}));
+    }
+  }
+
+  onClearResults = () => {
+    this.setState(() => ({outputLog: [], results: []}));
+  }
+
+  onWorkerMessage(e) {
+    if (Array.isArray(e.data)) {
+      this.setState(state => ({
+        worker: null, 
+        results: [...state.results, ...e.data]
+      }));
+    }
+    else {
+      this.setState(state => ({outputLog: [...state.outputLog, e.data]}));
+    }
+  }
+
+  onWorkerError() {
+    this.stopWorker();
   }
 
   render() {
     const headerHeight = this.props.headerHeight;
+    const state = this.state;
     return (
       <div className="h-100">
         <Header height={headerHeight}/>
@@ -31,7 +69,9 @@ class App extends React.Component {
               <OutputPane output={this.state.outputLog} results={this.state.results}/>
             </Col>
             <Col as="section" sm={12} md={6} className="order-1 order-md-2 h-100 bg-light py-3">
-              <InputPane onRunFPTaylor={this.onRunFPTaylor}/>
+              <InputPane isRunning={state.worker !== null}
+                         onClear={this.onClearResults}
+                         onRunOrStop={this.onRunFPTaylor}/>
             </Col>
           </Row>
         </Container>
