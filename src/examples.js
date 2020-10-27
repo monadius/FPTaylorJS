@@ -59,8 +59,7 @@ Expressions
   },
   {
     name: 'doppler',
-    data: `
-{
+    data: `{
 Variables
   real u in [-100, 100];
   real v in [20, 20000];
@@ -104,8 +103,7 @@ Expressions
   },
   {
     name: 'sine',
-    data: `
-Variables
+    data: `Variables
   real x in [-1.57079632679, 1.57079632679];
 
 Expressions
@@ -114,8 +112,7 @@ Expressions
   },
   {
     name: 'hartman3',
-    data: `
-Variables
+    data: `Variables
     real x1 in [0, 1];
     real x2 in [0, 1];
     real x3 in [0, 1];
@@ -140,8 +137,7 @@ Variables
   },
   {
     name: 'himmilbeau',
-    data: `
-Variables
+    data: `Variables
   real x1 in [-5, 5];
   real x2 in [-5, 5];
 
@@ -151,9 +147,7 @@ Expressions
   },
   {
     name: 'kepler',
-    data: `
-{
-Variables
+    data: `Variables
   real x1 in [4, 6.36];
   real x2 in [4, 6.36];
   real x3 in [4, 6.36];
@@ -173,13 +167,11 @@ Expressions
                  + x3 * x6 * (x1 + x2 - x3 + x4 + x5 - x6)
                  - x2 * x3 * x4 - x1 * x3 * x5
                  - x1 * x2 * x6 - x4 * x5 * x6;
-}
 `
   },
   {
     name: 'logexp',
-    data: `
-Variables
+    data: `Variables
   real x in [-8, 8];
 
 Definitions
@@ -194,8 +186,7 @@ Expressions
   },
   {
     name: 'predatorPrey',
-    data: `
-Constants
+    data: `Constants
   r = 4.0;
   K = 1.11;
 
@@ -211,8 +202,7 @@ Expressions
   },
   {
     name: 'rigidBody',
-    data: `
-Variables
+    data: `Variables
   real x1 in [-15, 15];
   real x2 in [-15, 15];
   real x3 in [-15, 15];
@@ -228,8 +218,7 @@ Expressions
   },
   {
     name: 'sineOrder3',
-    data: `
-Variables
+    data: `Variables
   real z in [-2, 2];
 
 Expressions
@@ -238,8 +227,7 @@ Expressions
   },
   {
     name: 'sqroot',
-    data: `
-Variables
+    data: `Variables
   real y in [0, 1];
   
 Expressions
@@ -248,8 +236,7 @@ Expressions
   },
   {
     name: 'turbine',
-    data: `
-Variables
+    data: `Variables
   real v in [-4.5, -0.3];
   real w in [0.4, 0.9];
   real r in [3.8, 7.8];
@@ -267,8 +254,7 @@ Expressions
   },
   {
     name: 'verhulst',
-    data: `
-Constants
+    data: `Constants
   r = 4.0;
   K = 1.11;
 
@@ -285,8 +271,7 @@ Expressions
   },
   {
     name: 'carbonGas',
-    data: `
-Constants
+    data: `Constants
   k = 1.3806503e-23;
 
 Variables

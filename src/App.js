@@ -11,7 +11,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      outputLog: ["Log1"],
+      outputLog: [],
       results: [],
       worker: null
     };

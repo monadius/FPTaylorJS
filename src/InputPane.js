@@ -6,8 +6,24 @@ import InputCard from './InputCard';
 import {configExamples, inputExamples} from './examples';
 
 class InputPane extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputValue: "",
+      configValue: ""
+    };
+  }
+
   onRunOrStop = () => {
-    this.props.onRunOrStop("Variables x in [3, 5]; Expressions e rnd64= x + x;", "");
+    this.props.onRunOrStop(this.state.inputValue, this.state.configValue);
+  }
+
+  onInputChange = (value) => {
+    this.setState({inputValue: value});
+  }
+
+  onConfigChange = (value) => {
+    this.setState({configValue: value});
   }
 
   render() {
@@ -17,9 +33,15 @@ class InputPane extends React.PureComponent {
 
     return (
       <div className="d-flex flex-column h-100">
-        <InputCard id="input" examples={inputExamples}
+        <InputCard id="input"
+          value={this.state.inputValue}
+          onChange={this.onInputChange}
+          examples={inputExamples}
           className="mb-1" style={{flex: 3}} title="Input"/>
-        <InputCard id="config" examples={configExamples} 
+        <InputCard id="config"
+          value={this.state.configValue}
+          onChange={this.onConfigChange}
+          examples={configExamples} 
           className="my-1" style={{flex: 2}} title="Configuration"/>
         <div>
           {runButton}
