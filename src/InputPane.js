@@ -3,6 +3,9 @@ import Button from 'react-bootstrap/Button';
 
 import InputCard from './InputCard';
 
+import './cm-modes/config.js'
+import './cm-modes/fptaylor.js'
+
 import {configExamples, inputExamples} from './examples';
 
 class InputPane extends React.PureComponent {
@@ -26,12 +29,14 @@ class InputPane extends React.PureComponent {
         <div className="pb-0" style={{height: 'calc(60% - 1.6rem)'}}>
           <InputCard id="input" ref={this.inputRef}
             className="h-100"
+            cmMode="fptaylor"
             examples={inputExamples}
             title="Input"/>
         </div>
         <div className="py-2" style={{height: 'calc(40% - 0.8rem)'}}>
           <InputCard id="config" ref={this.configRef}
             className="h-100"
+            cmMode="fptaylor-config"
             examples={configExamples} 
             title="Configuration"/>
         </div>

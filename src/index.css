@@ -34,5 +34,7 @@ body {
 
 .CodeMirror {
   height: 100% !important;
-  overflow: hidden;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+  font-size: 87%;
 }

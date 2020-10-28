@@ -5,9 +5,6 @@ import Form from 'react-bootstrap/Form';
 import {Controlled as CodeMirror} from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
 // import 'codemirror/theme/material.css';
-// require('codemirror/theme/neat.css');
-import 'codemirror/mode/xml/xml.js';
-// require('codemirror/mode/javascript/javascript.js');
 
 class InputCard extends React.Component {
   constructor(props) {
@@ -67,9 +64,10 @@ class InputCard extends React.Component {
             value={this.state.value}
             onBeforeChange={this.onChange}
             options={{
-              mode: 'xml',
+              mode: this.props.cmMode,
               // theme: 'material',
-              lineNumbers: true
+              lineNumbers: true,
+              tabSize: 2
             }}
             onChange={(editor, data, value) => {
             }}
