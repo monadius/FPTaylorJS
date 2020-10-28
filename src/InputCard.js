@@ -5,10 +5,18 @@ import Form from 'react-bootstrap/Form';
 class InputCard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: "",
-      selectionValue: "--"
-    };
+    if (props.examples && props.examples.length >= 1) {
+      this.state = {
+        value: props.examples[0].data,
+        selectionValue: "0"
+      };
+    }
+    else {
+      this.state = {
+        value: "",
+        selectionValue: "--"
+      };
+    }
   }
 
   get value() {
@@ -16,32 +24,16 @@ class InputCard extends React.Component {
   }
 
   onChange = (event) => {
-    this.setState({value: event.target.value});
-  }
-
-  static getSelectedExample(examples, value) {
-    if (!isNaN(value) && examples && +value < examples.length) {
-      return examples[+value].data;
-    }
-    return null;
+    this.setState({value: event.target.value, selectionValue: "--"});
   }
 
   onSelectionChange = (event) => {
     const value = event.target.value;
     this.setState({selectionValue: value});
-    const example = InputCard.getSelectedExample(this.props.examples, value);
-    if (example !== null) {
-      this.setState({value: example});
+    if (!isNaN(value) && this.props.examples && +value < this.props.examples.length) {
+      this.setState({value: this.props.examples[+value].data});
     }
   }
-
-  // static getDerivedStateFromProps(props, state) {
-  //   const example = InputCard.getSelectedExample(props.examples, state.selectionValue);
-  //   if (example !== null && example !== props.value) {
-  //     return {selectionValue: "--"};
-  //   }
-  //   return null;
-  // }
 
   render() {
     console.log(`Render: ${this.props.id}`)
