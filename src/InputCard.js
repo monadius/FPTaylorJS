@@ -2,6 +2,13 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 
+import {Controlled as CodeMirror} from 'react-codemirror2';
+import 'codemirror/lib/codemirror.css';
+// import 'codemirror/theme/material.css';
+// require('codemirror/theme/neat.css');
+import 'codemirror/mode/xml/xml.js';
+// require('codemirror/mode/javascript/javascript.js');
+
 class InputCard extends React.Component {
   constructor(props) {
     super(props);
@@ -23,8 +30,8 @@ class InputCard extends React.Component {
     return this.state.value;
   }
 
-  onChange = (event) => {
-    this.setState({value: event.target.value, selectionValue: "--"});
+  onChange = (editor, data, value) => {
+    this.setState({value: value, selectionValue: "--"});
   }
 
   onSelectionChange = (event) => {
@@ -36,7 +43,6 @@ class InputCard extends React.Component {
   }
 
   render() {
-    console.log(`Render: ${this.props.id}`)
     const examplesId = this.props.id + '-examples';
     const options = (this.props.examples || []).map(({name}, i) =>
       <option key={i} value={i}>{name}</option>);
@@ -56,12 +62,24 @@ class InputCard extends React.Component {
           </Form>
         </Card.Header>
         <Card.Body className="p-0">
-          <Form.Control id={this.props.id} as="textarea"
+          <CodeMirror
+            className="h-100"
+            value={this.state.value}
+            onBeforeChange={this.onChange}
+            options={{
+              mode: 'xml',
+              // theme: 'material',
+              lineNumbers: true
+            }}
+            onChange={(editor, data, value) => {
+            }}
+          />
+          {/* <Form.Control id={this.props.id} as="textarea"
             value={this.state.value}
             onChange={this.onChange}
             className="text-monospace h-100 w-100"
             spellCheck={false}
-            style={{resize: "none", border: "none", outline: "none", fontSize: "87%"}}/>
+            style={{resize: "none", border: "none", outline: "none", fontSize: "87%"}}/> */}
         </Card.Body>
       </Card>
     );
