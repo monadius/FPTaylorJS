@@ -8,7 +8,7 @@ class Results extends React.PureComponent {
         <td>{res.name}</td>
         <td>{res.absErrorExactStr || res.absErrorApproxStr || '-'}</td>
         <td>{res.relErrorExactStr || res.relErrorApproxStr || '-'}</td>
-        <td>{res.ulpErrorExactStr || res.ulpErrorApproxStr || '-'}</td>
+        {/* <td>{res.ulpErrorExactStr || res.ulpErrorApproxStr || '-'}</td> */}
         <td>{res.elapsedTime.toFixed(2) + 's'}</td>
       </tr>
     );
@@ -20,7 +20,7 @@ class Results extends React.PureComponent {
             <th>Name</th>
             <th>Abs Error</th>
             <th>Rel Error</th>
-            <th>Ulp Error</th>
+            {/* <th>Ulp Error</th> */}
             <th>Time</th>
           </tr>
         </thead>

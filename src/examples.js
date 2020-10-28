@@ -34,7 +34,7 @@ export const inputExamples = [
   {
     name: 'Basic',
     data: `Variables
-  real x in [0, 20];
+  real x in [1, 20];
 
 Expressions
   r rnd64= x + x;
@@ -68,7 +68,6 @@ Variables
 Definitions
   t1 rnd64= 331.4 + 0.6 * T;
   r rnd64= (-t1 * v) / ((t1 + u) * (t1 + u));
-  
 
 Expressions
   doppler1 = r;
@@ -95,7 +94,7 @@ Expressions
 Definitions
   t1 rnd64= 331.4 + 0.6 * T;
   r rnd64= (-t1 * v) / ((t1 + u) * (t1 + u));
-  
+
 Expressions
   doppler3 = r;
 }
@@ -117,7 +116,7 @@ Expressions
     real x2 in [0, 1];
     real x3 in [0, 1];
   
-  Definitions
+Definitions
     e1 rnd64= 3.0 * ((x1 - 0.3689) * (x1 - 0.3689)) + 10.0 * ((x2 - 0.117) * (x2 - 0.117))
               + 30.0 * ((x3 - 0.2673) * (x3 - 0.2673));
     e2 rnd64= 0.1 * ((x1 - 0.4699) * (x1 - 0.4699)) + 10.0 * ((x2 - 0.4387) * (x2 - 0.4387))
@@ -131,7 +130,7 @@ Expressions
     exp3 = rnd[64, ne, 1.5](exp(-e3));
     exp4 = rnd[64, ne, 1.5](exp(-e4));
   
-  Expressions
+Expressions
     hartman3 rnd64= -(1.0 * exp1 + 1.2 * exp2 + 3.0 * exp3 + 3.2 * exp4);
 `
   },
@@ -192,7 +191,7 @@ Expressions
 
 Variables
   real x in [0.1, 0.3];
-	
+
 Definitions
   res rnd64= (r*x*x) / (1 + (x/K)*(x/K));
   
@@ -263,7 +262,6 @@ Variables
 
 Definitions
   res rnd64= (r*x) / (1 + (x/K));
-  
 
 Expressions
   verhulst = res;
@@ -284,7 +282,6 @@ Variables
 
 Definitions
   res rnd64= (p + a * (N / V) * (N / V)) * (V - N * b) - k * N * T;
-  
 
 Expressions
   carbon_gas = res;
