@@ -6,12 +6,17 @@ class InputCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      value: "",
       selectionValue: "--"
     };
   }
 
+  get value() {
+    return this.state.value;
+  }
+
   onChange = (event) => {
-    this.props.onChange(event.target.value);
+    this.setState({value: event.target.value});
   }
 
   static getSelectedExample(examples, value) {
@@ -26,17 +31,17 @@ class InputCard extends React.Component {
     this.setState({selectionValue: value});
     const example = InputCard.getSelectedExample(this.props.examples, value);
     if (example !== null) {
-      this.props.onChange(example);
+      this.setState({value: example});
     }
   }
 
-  static getDerivedStateFromProps(props, state) {
-    const example = InputCard.getSelectedExample(props.examples, state.selectionValue);
-    if (example !== null && example !== props.value) {
-      return {selectionValue: "--"};
-    }
-    return null;
-  }
+  // static getDerivedStateFromProps(props, state) {
+  //   const example = InputCard.getSelectedExample(props.examples, state.selectionValue);
+  //   if (example !== null && example !== props.value) {
+  //     return {selectionValue: "--"};
+  //   }
+  //   return null;
+  // }
 
   render() {
     console.log(`Render: ${this.props.id}`)
@@ -60,7 +65,7 @@ class InputCard extends React.Component {
         </Card.Header>
         <Card.Body className="p-0">
           <Form.Control id={this.props.id} as="textarea"
-            value={this.props.value}
+            value={this.state.value}
             onChange={this.onChange}
             className="text-monospace h-100 w-100"
             spellCheck={false}

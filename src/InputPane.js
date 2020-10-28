@@ -12,10 +12,12 @@ class InputPane extends React.PureComponent {
       inputValue: "",
       configValue: ""
     };
+    this.inputRef = React.createRef();
+    this.configRef = React.createRef();
   }
 
   onRunOrStop = () => {
-    this.props.onRunOrStop(this.state.inputValue, this.state.configValue);
+    this.props.onRunOrStop(this.inputRef.current.value, this.configRef.current.value);
   }
 
   onInputChange = (value) => {
@@ -33,14 +35,10 @@ class InputPane extends React.PureComponent {
 
     return (
       <div className="d-flex flex-column h-100">
-        <InputCard id="input"
-          value={this.state.inputValue}
-          onChange={this.onInputChange}
+        <InputCard id="input" ref={this.inputRef}
           examples={inputExamples}
           className="mb-1" style={{flex: 3}} title="Input"/>
-        <InputCard id="config"
-          value={this.state.configValue}
-          onChange={this.onConfigChange}
+        <InputCard id="config" ref={this.configRef}
           examples={configExamples} 
           className="my-1" style={{flex: 2}} title="Configuration"/>
         <div>
