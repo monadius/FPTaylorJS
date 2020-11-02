@@ -7,6 +7,18 @@ import Header from './Header';
 import OutputPane from './OutputPane'
 import InputPane from './InputPane'
 
+const transformResult = (() => {
+  let id = 0;
+  return (data) => ({
+    id: id++,
+    ...data,
+    absError: data.absErrorExactStr || data.absErrorApproxStr || '-',
+    relError: data.relErrorExactStr || data.relErrorApproxStr || '-',
+    ulpError: data.ulpErrorExactStr || data.ulpErrorApproxStr || '-',
+    bounds: [-Infinity, Infinity]
+  });
+})();
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -45,7 +57,7 @@ class App extends React.Component {
     if (Array.isArray(e.data)) {
       this.setState(state => ({
         worker: null, 
-        results: [...state.results, ...e.data]
+        results: [...state.results, ...e.data.map(transformResult)]
       }));
     }
     else {

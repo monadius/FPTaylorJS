@@ -10,7 +10,7 @@ class OutputPane extends React.PureComponent {
   render() {
     return (
       <Card className="h-100">
-        <Tab.Container defaultActiveKey="output" transition={false}>
+        <Tab.Container defaultActiveKey="results" transition={false}>
           <Card.Header>
             <Nav variant="tabs">
               <Nav.Item>

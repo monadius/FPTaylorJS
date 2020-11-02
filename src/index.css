@@ -38,3 +38,12 @@ body {
     monospace;
   font-size: 87%;
 }
+
+.react-bootstrap-table .table {
+  width: auto;
+  min-width: 100%;
+}
+
+.react-bootstrap-table th {
+  border-top: 0;
+}
