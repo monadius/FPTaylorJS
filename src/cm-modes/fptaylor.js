@@ -14,7 +14,7 @@ cm.defineSimpleMode("fptaylor", {
      token: "def"},
     {regex: new RegExp(`(?:${keywords.join('|')})\\b`),
       token: "keyword"},
-    {regex: /[-+\/*=<>]+/, 
+    {regex: /[-+/*=<>]+/, 
      token: "operator"},
     {regex: /[a-z]\w*\b/i,
      token: "variable"},

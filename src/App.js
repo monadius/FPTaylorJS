@@ -12,6 +12,7 @@ const transformResult = (() => {
   return (data) => ({
     id: id++,
     ...data,
+    elapsedTime: data.elapsedTime.toFixed(2),
     absError: data.absErrorExactStr || data.absErrorApproxStr || '-',
     relError: data.relErrorExactStr || data.relErrorApproxStr || '-',
     ulpError: data.ulpErrorExactStr || data.ulpErrorApproxStr || '-',

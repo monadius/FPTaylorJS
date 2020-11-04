@@ -24,10 +24,12 @@ class OutputPane extends React.PureComponent {
           <Card.Body className="p-0">
             <Tab.Content className="h-100">
               <Tab.Pane eventKey="output" className="h-100">
-                <Output data={this.props.output}/>
+                <Output data={ this.props.output }/>
               </Tab.Pane>
               <Tab.Pane eventKey="results" className="h-100 overflow-auto">
-                <Results data={this.props.results}/>
+                <Results data={ this.props.results }
+                  initHidden={{'relError': true, 'ulpError': true}}
+                />
               </Tab.Pane>
             </Tab.Content>
           </Card.Body>
