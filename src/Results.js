@@ -4,11 +4,15 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import { Button, ButtonGroup, ButtonToolbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
+import ResultRow from './ResultRow';
+
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import { ReactComponent as IconEye } from './icons/eye.svg';
 import { ReactComponent as IconEyeSlash } from './icons/eyeSlash.svg';
 import { ReactComponent as IconTable } from './icons/table.svg';
 import { ReactComponent as IconTrash } from './icons/trash.svg';
+
+const RowContext = React.createContext({});
 
 const cellStyle = {
   whiteSpace: 'nowrap',
@@ -53,23 +57,16 @@ const columns = [{
   style: cellStyle
 }];
 
-const ExpandedRow = (props) => {
-  const [show, changeShow] = useState(false);
-  const row = props.row;
 
-  return (
-    <>
-      <p>Bounds: [{row.bounds[0]}, {row.bounds[1]}]</p>
-      <Button onClick={() => changeShow(!show)}>Plot</Button>
-      { show && <div style={{height: "800px", width: "800px"}}>Big Chart</div> }
-    </>
-  );
-}
 
 const expandRow = {
   // To prevent the hover effect
   className: "bg-white",
-  renderer: row => <ExpandedRow row={ row }/>
+  renderer: row => (
+    <RowContext.Consumer>
+      { value => <ResultRow row={ row } update={ value.update } data={ value[row.id] } /> }
+    </RowContext.Consumer>
+  )
 };
 
 const CustomToggleList = ({
@@ -123,7 +120,12 @@ class Results extends React.PureComponent {
       toggles: toggles,
       selected: [],
       hidden: [],
+      extraData: {update: this.updateExtraData}
     }
+  }
+
+  updateExtraData = (row, data) => {
+    this.setState({extraData: {...this.state.extraData, [row.id]: data}});
   }
 
   handleColumnToggle = (columnName) => {
@@ -207,20 +209,22 @@ class Results extends React.PureComponent {
             toggles={ this.state.toggles }
           />
         </ButtonToolbar>
-        <BootstrapTable
-          keyField='id'
-          data={ this.props.data }
-          columns={ this.columns }
-          columnToggle={{toggles: this.state.toggles}}
-          bootstrap4 hover
-          // classes="table-borderless"
-          bordered={ false }
-          headerWrapperClasses="border-0"
-          sort={{dataField: this.state.sortField, order: this.state.sortOrder}}
-          hiddenRows={ this.state.hidden }
-          selectRow={ selectRow }
-          expandRow={ expandRow }
-        />
+        <RowContext.Provider value={ this.state.extraData }>
+          <BootstrapTable
+            keyField='id'
+            data={ this.props.data }
+            columns={ this.columns }
+            columnToggle={{toggles: this.state.toggles}}
+            bootstrap4 hover
+            // classes="table-borderless"
+            bordered={ false }
+            headerWrapperClasses="border-0"
+            sort={{dataField: this.state.sortField, order: this.state.sortOrder}}
+            hiddenRows={ this.state.hidden }
+            selectRow={ selectRow }
+            expandRow={ expandRow }
+          />
+        </RowContext.Provider>
       </>
     );
   }

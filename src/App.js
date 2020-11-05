@@ -16,7 +16,7 @@ const transformResult = (() => {
     absError: data.absErrorExactStr || data.absErrorApproxStr || '-',
     relError: data.relErrorExactStr || data.relErrorApproxStr || '-',
     ulpError: data.ulpErrorExactStr || data.ulpErrorApproxStr || '-',
-    bounds: [-Infinity, Infinity]
+    bounds: data.realBounds
   });
 })();
 
