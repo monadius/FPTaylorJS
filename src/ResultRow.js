@@ -29,10 +29,10 @@ function createData(foo, dom, samples = 500) {
 }
 
 const infoParams = [
-  ['absErrorExactStr', 'Abs Error', 'absErrorModel'],
-  ['absErrorApproxStr', 'Abs Error (approx)'],
-  ['relErrorExactStr', 'Rel Error', 'relErrorModel'],
-  ['relErrorApproxStr', 'Rel Error (approx)'],
+  ['absErrorExactStr', 'Absolute Error', 'absErrorModel'],
+  ['absErrorApproxStr', 'Absolute Error (approx)'],
+  ['relErrorExactStr', 'Relative Error', 'relErrorModel'],
+  ['relErrorApproxStr', 'Relative Error (approx)'],
   ['ulpErrorExactStr', 'ULP Error'],
   ['ulpErrorApproxStr', 'ULP Error (approx)'],
   ['realBounds', 'Bounds (without rounding)']

@@ -3,7 +3,7 @@ import { LineChart, XAxis, YAxis, Line, Tooltip, Brush, ResponsiveContainer } fr
 
 const fmtX = x => x.toPrecision(2);
 
-const Chart = ({data}) => {
+const Chart = ({title, data}) => {
   return (
     <ResponsiveContainer width="100%" aspect={5/3}>
       <LineChart data={ data }
@@ -11,7 +11,8 @@ const Chart = ({data}) => {
       >
         <XAxis dataKey="x" scale="linear" tickFormatter={ fmtX }/>
         <YAxis scale="linear" tickFormatter={ fmtX }/>
-        <Line type="monotone" dataKey="y" strokeWidth={2} dot={false} isAnimationActive={false}/>
+        {/* <Legend verticalAlign="top"/> */}
+        <Line name={title} type="monotone" dataKey="y" strokeWidth={2} dot={false} isAnimationActive={false}/>
         <Tooltip/>
         <Brush leaveTimeOut={200} dataKey="x" height={30} tickFormatter = { fmtX }/>
       </LineChart>
