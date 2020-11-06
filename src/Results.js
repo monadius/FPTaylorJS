@@ -99,8 +99,6 @@ class Results extends React.PureComponent {
         return r;
     }, {});
 
-    console.log(toggles);
-
     this.state = {
       sortField: null,
       sortOrder: null,

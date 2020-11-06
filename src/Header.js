@@ -1,6 +1,18 @@
-import React from 'react';
-import Navbar from 'react-bootstrap/Navbar';
-import Modal from 'react-bootstrap/Modal';
+import React, { useState } from 'react';
+import { Navbar, Modal, Nav } from 'react-bootstrap';
+
+const credits = [
+  ['React', 'https://reactjs.org/'],
+  ['Bootstrap', 'https://getbootstrap.com/'], 
+  ['React Bootstrap', 'https://react-bootstrap.github.io/'],
+  ['Bootstrap Icons', 'https://icons.getbootstrap.com/'],
+  ['react-bootstrap-table2', 'https://react-bootstrap-table.github.io/react-bootstrap-table2/'],
+  ['CodeMirror', 'https://codemirror.net/'],
+  ['Recharts', 'https://recharts.org/en-US']
+];
+
+const createLink = (text, href) =>
+  <a href={ href } target="_blank" rel="noopener noreferrer">{ text }</a>;
 
 const InfoModal = (props) => {
   return (
@@ -9,36 +21,41 @@ const InfoModal = (props) => {
         <Modal.Title>FPTaylor JS</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>A JavaScript version of <a href="https://github.com/soarlab/FPTaylor" target="_blank" rel="noopener noreferrer">FPTaylor</a> compiled with <a href="https://ocsigen.org/js_of_ocaml" target="_blank" rel="noopener noreferrer">Js_of_ocaml</a>.
+        <p>
+          A JavaScript version of { createLink('FPTaylor', 'https://github.com/soarlab/FPTaylor') } compiled
+          with { createLink('Js_of_ocaml', 'https://ocsigen.org/js_of_ocaml') }.
         </p>
-        <p>The site is created with <a href="https://reactjs.org/" target="_blank" rel="noopener noreferrer">React</a> and <a href="https://getbootstrap.com" target="_blank" rel="noopener noreferrer">Bootstrap</a>.</p>
+        <p>
+          Note: trigonometric functions are not supported because 
+          the underlying { createLink('OCaml interval arithmetic library', 'https://github.com/monadius/ocaml_simple_interval') } does not
+          implement them.
+        </p>
+        <p>This site { createLink('source code', 'https://github.com/monadius/FPTaylorJS') }.</p>
+        <p>FPTaylor { createLink('reference', 'https://github.com/soarlab/FPTaylor/blob/develop/REFERENCE.md') }.</p>
         <hr/>
-        <p>FPTaylor <a href="https://github.com/soarlab/FPTaylor/blob/develop/REFERENCE.md" target="_blank" rel="noopener noreferrer">reference</a>.</p>
-        <p>Note: trigonometric functions are not supported because the <a href="https://github.com/monadius/ocaml_simple_interval" target="_blank" rel="noopener noreferrer">OCaml interval arithmetic library</a> does not implement them.
-        </p>
+        <h4>Credits</h4>
+        <ul>
+          { credits.map((x, i) => <li key={i}>{ createLink(...x) }</li>) }
+        </ul>
       </Modal.Body>
     </Modal>
   );
 }
 
-class Header extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {showInfo: false};
-    this.onHideInfo = () => this.setState({showInfo: false});
-    this.onShowInfo = () => this.setState({showInfo: true});
-  }
-
-  render() {
-    return (
-      <>
-        <Navbar bg="dark" variant="dark" className="py-0" style={{height: this.props.height}}>
-          <Navbar.Brand href="#info" onClick={this.onShowInfo}>FPTaylor JS</Navbar.Brand>
-        </Navbar>
-        <InfoModal show={this.state.showInfo} onHide={this.onHideInfo}/>
-      </>
-    );
-  }
-}
+const Header = React.memo((props) => {
+  console.log('Header: render');
+  const [showInfo, changeShowInfo] = useState(false);
+  return (
+    <>
+      <Navbar bg="dark" variant="dark" className="py-0" style={{height: props.height}}>
+        <Navbar.Brand href="#info" onClick={changeShowInfo.bind(null, true)}>FPTaylor JS</Navbar.Brand>
+        <Nav className="justify-content-end flex-fill">
+          <Nav.Link href="https://github.com/monadius/FPTaylorJS" target="_blank" rel="noopener noreferrer">GitHub</Nav.Link>
+        </Nav>
+      </Navbar>
+      <InfoModal show={showInfo} onHide={changeShowInfo.bind(null, false)}/>
+    </>
+  );
+});
 
 export default Header;
