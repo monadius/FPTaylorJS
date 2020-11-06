@@ -42,8 +42,8 @@ class InputPane extends React.PureComponent {
         </div>
         <div style={{height: '2.4rem'}}>
           {runButton}
-          <Button variant="primary" className="ml-1 py-0 w-25 h-100" 
-            onClick={this.props.onClear}>Clear</Button>
+          {/* <Button variant="primary" className="ml-1 py-0 w-25 h-100" 
+            onClick={this.props.onClear}>Clear</Button> */}
         </div>
       </div>
     );
