@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import Chart from './ResultChart';
 
 function interval(a, b) {
@@ -16,8 +16,8 @@ function floor_power2(x) {
   return x === 0.5 ? 2 ** (e - 2) : 2 ** (e - 1);
 }
 
-function createData(foo, dom, samples) {
-  const [a, b] = dom;
+function createData(foo, dom, samples = 500) {
+  const [a, b] = dom || [0, 1];
   const h = (b - a) / Math.max(1, samples);
   const data = Array(samples);
   for (let i = 0; i < samples; i++) {
@@ -28,14 +28,23 @@ function createData(foo, dom, samples) {
   return data;
 }
 
+function addInfo(info, row, field, name) {
+  if (row[field]) {
+    const v = row[field];
+    const text = typeof v === 'string' ? v :
+                 typeof v === 'number' ? v.toString() :
+                 Array.isArray(v) ? `[${v.map(x => x.toString()).join(', ')}]` :
+                 v.toString();
+    info.push(<tr key={ field } className="bg-white"><td>{ name }</td><td>{ text }</td></tr>);
+  }
+  return info;
+}
+
 const ResultRow = ({row, update, data}) => {
   const show = data && data.show;
   const chartData = (data && data.data) || [];
-  // const [show, changeShow] = useState(false);
-  // const [data, updateData] = useState([]);
 
   const handleShow = () => {
-    // changeShow(!show);
     const newData = { show: !show };
     if (newData.show && row.absErrorModel && row.absErrorModel.expr) {
       if (!chartData || !chartData.length) {
@@ -46,9 +55,23 @@ const ResultRow = ({row, update, data}) => {
     update(row, newData);
   };
 
+  const info = [
+    ['absErrorExactStr', 'Abs Error'],
+    ['absErrorApproxStr', 'Abs Error (approx)'],
+    ['relErrorExactStr', 'Rel Error'],
+    ['relErrorApproxStr', 'Rel Error (approx)'],
+    ['ulpErrorExactStr', 'ULP Error'],
+    ['ulpErrorApproxStr', 'ULP Error (approx)'],
+    ['realBounds', 'Bounds (without rounding)']
+  ].reduce((info, [field, name]) => addInfo(info, row, field, name), []);
+
   return (
     <>
-      <p>Bounds: [{row.bounds[0]}, {row.bounds[1]}]</p>
+      <Table borderless hover={false} size="sm" style={{width: "auto"}}>
+        <tbody>
+          { info }
+        </tbody>
+      </Table>
       {/* <pre style={{width: 500}} className="overflow-auto">
         { row.absErrorModel.expr }
         { row.absErrorModel.dom.toString() }
