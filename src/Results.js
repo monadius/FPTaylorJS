@@ -12,8 +12,6 @@ import { ReactComponent as IconEyeSlash } from './icons/eyeSlash.svg';
 import { ReactComponent as IconTable } from './icons/table.svg';
 import { ReactComponent as IconTrash } from './icons/trash.svg';
 
-const RowContext = React.createContext({});
-
 const cellStyle = {
   whiteSpace: 'nowrap',
 };
@@ -57,17 +55,6 @@ const columns = [{
   style: cellStyle
 }];
 
-
-
-const expandRow = {
-  // To prevent the hover effect
-  className: "bg-white",
-  renderer: row => (
-    <RowContext.Consumer>
-      { value => <ResultRow row={ row } update={ value.update } data={ value[row.id] } /> }
-    </RowContext.Consumer>
-  )
-};
 
 const CustomToggleList = ({
   columns,
@@ -120,12 +107,12 @@ class Results extends React.PureComponent {
       toggles: toggles,
       selected: [],
       hidden: [],
-      extraData: {update: this.updateExtraData}
+      rowData: {}
     }
   }
 
-  updateExtraData = (row, data) => {
-    this.setState({extraData: {...this.state.extraData, [row.id]: data}});
+  updateRowData = (row, data) => {
+    this.setState({rowData: {...this.state.rowData, [row.id]: data}});
   }
 
   handleColumnToggle = (columnName) => {
@@ -166,6 +153,14 @@ class Results extends React.PureComponent {
     if (this.state.selected.length > 0) {
       this.setState(state => ({hidden: [...state.hidden, ...state.selected], selected: []}));
     }
+  }
+
+  expandRow = {
+    // To prevent the hover effect
+    className: "bg-white",
+    renderer: row => (
+      <ResultRow row={ row } update={ this.updateRowData } data={ this.state.rowData[row.id] } />
+    )
   }
 
   render() {
@@ -209,22 +204,20 @@ class Results extends React.PureComponent {
             toggles={ this.state.toggles }
           />
         </ButtonToolbar>
-        <RowContext.Provider value={ this.state.extraData }>
-          <BootstrapTable
-            keyField='id'
-            data={ this.props.data }
-            columns={ this.columns }
-            columnToggle={{toggles: this.state.toggles}}
-            bootstrap4 hover
-            // classes="table-borderless"
-            bordered={ false }
-            headerWrapperClasses="border-0"
-            sort={{dataField: this.state.sortField, order: this.state.sortOrder}}
-            hiddenRows={ this.state.hidden }
-            selectRow={ selectRow }
-            expandRow={ expandRow }
-          />
-        </RowContext.Provider>
+        <BootstrapTable
+          keyField='id'
+          data={ this.props.data }
+          columns={ this.columns }
+          columnToggle={{toggles: this.state.toggles}}
+          bootstrap4 hover
+          // classes="table-borderless"
+          bordered={ false }
+          headerWrapperClasses="border-0"
+          sort={{dataField: this.state.sortField, order: this.state.sortOrder}}
+          hiddenRows={ this.state.hidden }
+          selectRow={ selectRow }
+          expandRow={ this.expandRow }
+        />
       </>
     );
   }
