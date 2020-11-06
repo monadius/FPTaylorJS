@@ -43,14 +43,13 @@ const InfoModal = (props) => {
 }
 
 const Header = React.memo((props) => {
-  console.log('Header: render');
   const [showInfo, changeShowInfo] = useState(false);
   return (
     <>
       <Navbar bg="dark" variant="dark" className="py-0" style={{height: props.height}}>
         <Navbar.Brand href="#info" onClick={changeShowInfo.bind(null, true)}>FPTaylor JS</Navbar.Brand>
-        <Nav className="justify-content-end flex-fill">
-          <Nav.Link href="https://github.com/monadius/FPTaylorJS" target="_blank" rel="noopener noreferrer">GitHub</Nav.Link>
+        <Nav activeKey="" className="justify-content-end flex-fill">
+          <Nav.Link active={false} href="https://github.com/monadius/FPTaylorJS" target="_blank" rel="noopener noreferrer">GitHub</Nav.Link>
         </Nav>
       </Navbar>
       <InfoModal show={showInfo} onHide={changeShowInfo.bind(null, false)}/>
