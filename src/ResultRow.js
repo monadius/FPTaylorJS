@@ -35,7 +35,7 @@ const infoParams = [
   ['relErrorApproxStr', 'Relative Error (approx)'],
   ['ulpErrorExactStr', 'ULP Error'],
   ['ulpErrorApproxStr', 'ULP Error (approx)'],
-  ['realBounds', 'Bounds (without rounding)']
+  ['realBoundsStr', 'Bounds (without rounding)']
 ];
 
 const ResultRow = ({row, update, data}) => {
@@ -61,13 +61,16 @@ const ResultRow = ({row, update, data}) => {
                    typeof v === 'number' ? v.toString() :
                    Array.isArray(v) ? `[${v.map(x => x.toString()).join(', ')}]` :
                    v.toString();
-      if (text) {
+      if (text && text !== '[-inf, +inf]') {
         let plotButton = null;
         if (errModelField && row[errModelField]) {
           const type = errModelField.slice(0, 3);
           const handle = handleShow.bind(null, type, errModelField);
           const visible = (data || {})[type + 'Show'];
-          plotButton = <Button onClick={ handle } variant="success">{ visible ? "Hide" : "Plot" }</Button>;
+          plotButton = 
+            <Button onClick={ handle } variant="success" className="py-0">
+              { visible ? "Hide" : "Plot" }
+            </Button>;
         }
         info.push(
           <tr key={ field } className="bg-white">
