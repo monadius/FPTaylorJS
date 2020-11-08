@@ -97,10 +97,10 @@ class App extends React.Component {
           cursor="col-resize"
           className="d-flex flex-wrap h-100 bg-light"
         >
-          <section className="order-3 order-md-1 h-100 py-3 col-sm-12 col-md-auto px-2 pr-md-0 bg-light" >
+          <section className="order-3 order-md-1 h-100 py-3 col-12 col-md-auto px-2 pr-md-0 bg-light" >
             <OutputPane output={this.state.outputLog} results={this.state.results}/>
           </section>
-          <section className="order-1 order-md-3 h-100 py-3 col-sm-12 col-md-auto px-2 pl-md-0 bg-light">
+          <section className="order-1 order-md-3 h-100 py-3 col-12 col-md-auto px-2 pl-md-0 bg-light">
             <InputPane isRunning={state.worker !== null}
                        onClear={this.onClearResults}
                        onRunOrStop={this.onRunFPTaylor}/>
