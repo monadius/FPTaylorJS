@@ -49,3 +49,24 @@ body {
 .react-bootstrap-table th {
   border-top: 0;
 }
+
+.gutter.gutter-horizontal {
+  z-index: 10;
+  cursor: col-resize;
+  /* background-color: black; */
+  opacity: 0.2;
+  /* margin: 0 -4px; */
+  /* border-left: 5px solid rgba(255, 255, 255, 0); */
+  /* border-right: 5px solid rgba(255, 255, 255, 0); */
+  /* -moz-background-clip: padding; */
+  /* -webkit-background-clip: padding; */
+  /* background-clip: padding-box; */
+}
+
+.gutter:hover {
+  /* -webkit-transition: all 2s ease;
+  transition: all 2s ease; */
+  /* border-left: 5px solid rgba(0, 0, 0, 0.5); */
+  /* border-right: 5px solid rgba(0, 0, 0, 0.5); */
+  background-color: black;
+}

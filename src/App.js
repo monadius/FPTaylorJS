@@ -2,6 +2,7 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Split from 'react-split';
 
 import Header from './Header';
 import OutputPane from './OutputPane'
@@ -70,14 +71,42 @@ class App extends React.Component {
     this.stopWorker();
   }
 
+  createGutter = (index, dir) => {
+    const gutter = document.createElement('div');
+    gutter.className = `order-2 my-3 d-none d-md-block gutter gutter-${dir}`;
+    return gutter;
+  }
+
   render() {
     const headerHeight = this.props.headerHeight;
     const state = this.state;
     return (
       <div className="h-100">
         <Header height={headerHeight}/>
-        <Container as="main" fluid style={{height: `calc(100% - ${headerHeight})`}}>
-          <Row className="h-100 p-0">
+        <Container as="main" fluid className="p-0" style={{height: `calc(100% - ${headerHeight})`}}>
+        <Split
+          sizes={[50, 50]}
+          minSize={300}
+          expandToMin={false}
+          gutterSize={6}
+          gutterAlign="center"
+          gutter={this.createGutter}
+          snapOffset={30}
+          dragInterval={1}
+          direction="horizontal"
+          cursor="col-resize"
+          className="d-flex flex-wrap h-100 bg-light"
+        >
+          <section className="order-3 order-md-1 h-100 py-3 col-sm-12 col-md-auto px-2 pr-md-0 bg-light" >
+            <OutputPane output={this.state.outputLog} results={this.state.results}/>
+          </section>
+          <section className="order-1 order-md-3 h-100 py-3 col-sm-12 col-md-auto px-2 pl-md-0 bg-light">
+            <InputPane isRunning={state.worker !== null}
+                       onClear={this.onClearResults}
+                       onRunOrStop={this.onRunFPTaylor}/>
+          </section>
+        </Split>
+          {/* <Row className="h-100 p-0">
             <Col as="section" sm={12} md={6} className="order-2 order-md-1 h-100 bg-light py-3" >
               <OutputPane output={this.state.outputLog} results={this.state.results}/>
             </Col>
@@ -86,7 +115,7 @@ class App extends React.Component {
                          onClear={this.onClearResults}
                          onRunOrStop={this.onRunFPTaylor}/>
             </Col>
-          </Row>
+          </Row> */}
         </Container>
       </div>
     );

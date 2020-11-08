@@ -8,7 +8,8 @@ const credits = [
   ['Bootstrap Icons', 'https://icons.getbootstrap.com/'],
   ['react-bootstrap-table2', 'https://react-bootstrap-table.github.io/react-bootstrap-table2/'],
   ['CodeMirror', 'https://codemirror.net/'],
-  ['Recharts', 'https://recharts.org/en-US']
+  ['Recharts', 'https://recharts.org/en-US'],
+  ['Split.js', 'https://split.js.org/']
 ];
 
 const createLink = (text, href) =>
