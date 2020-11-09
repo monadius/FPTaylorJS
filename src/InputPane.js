@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Split from 'react-split';
 
 import InputCard from './InputCard';
+import InputConfigCard from './InputConfigCard';
 
 import './cm-modes/config.js'
 import './cm-modes/fptaylor.js'
@@ -19,7 +20,8 @@ const InputPane = React.memo(({isRunning, onRunOrStop}) => {
   const inputRef = useRef(null);
   const configRef = useRef(null);
   const handleRun = useCallback(() => 
-    onRunOrStop(inputRef.current.value, configRef.current.value));
+    onRunOrStop(inputRef.current.value, configRef.current.value),
+    [onRunOrStop]);
   
   const runButton = isRunning ?
       <Button variant="danger" className="w-25 py-0 h-100" onClick={handleRun}>Stop</Button> :
@@ -40,15 +42,15 @@ const InputPane = React.memo(({isRunning, onRunOrStop}) => {
         cursor="row-resize"
         style={{height: 'calc(100% - 2.4rem)'}}
       >
-        <div className="pb-0" style={{height: '60%'}}>
+        <div className="pb-0">
           <InputCard id="input" ref={inputRef}
             className="h-100"
             cmMode="fptaylor"
             examples={inputExamples}
             title="Input"/>
         </div>
-        <div className="pb-2" style={{height: '40%'}}>
-          <InputCard id="config" ref={configRef}
+        <div className="pb-2">
+          <InputConfigCard id="config" ref={configRef}
             className="h-100"
             cmMode="fptaylor-config"
             examples={configExamples} 

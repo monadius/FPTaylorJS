@@ -8,6 +8,7 @@ const credits = [
   ['Bootstrap Icons', 'https://icons.getbootstrap.com/'],
   ['react-bootstrap-table2', 'https://react-bootstrap-table.github.io/react-bootstrap-table2/'],
   ['CodeMirror', 'https://codemirror.net/'],
+  ['react-codemirror2', 'https://github.com/scniro/react-codemirror2'],
   ['Recharts', 'https://recharts.org/en-US'],
   ['Split.js', 'https://split.js.org/']
 ];
