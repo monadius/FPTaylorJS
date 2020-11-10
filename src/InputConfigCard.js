@@ -61,21 +61,24 @@ class InputConfigCard extends React.Component {
             </Form>
           </Card.Header>
           <Card.Body className="p-0 overflow-auto">
-            {showText ? 
-                <CodeMirror
-                  className="h-100"
-                  value={this.state.value}
-                  onBeforeChange={this.onChange}
-                  options={{
-                    mode: this.props.cmMode,
-                    // theme: 'material',
-                    lineNumbers: true,
-                    tabSize: 2
-                  }}
-                  onChange={(editor, data, value) => {
-                  }}
-                /> :
-                <ConfigControls/>}
+            {
+              // CodeMirror's layout is broken if its initial display style is 'none'
+              // so we reinitialize it every time here
+              showText && 
+              <CodeMirror
+                className="h-100"
+                value={this.state.value}
+                onBeforeChange={this.onChange}
+                options={{
+                  mode: this.props.cmMode,
+                  // theme: 'material',
+                  lineNumbers: true,
+                  tabSize: 2
+                }}
+                onChange={(editor, data, value) => {}}
+              />
+            }
+            <ConfigControls className={showText ? "d-none" : ""}/>
           </Card.Body>
           <Card.Footer className="py-1">
             <Nav variant="pills"
