@@ -174,3 +174,54 @@ export const optionInfo = {
     type: 'bool'
   }
 };
+
+export const optionGroups = [
+  {
+    title: 'General options',
+    options: [
+      'abs-error',
+      'rel-error',
+      'ulp-error',
+      'fp-power2-model',
+      'find-bounds'
+    ]
+  },
+  {
+    title: 'Output options',
+    options: [
+      'verbosity',
+      'debug',
+      'print-precision'
+    ]
+  },
+  {
+    title: 'Input options',
+    options: [
+      'default-var-type',
+      'default-rnd'
+    ]
+  },
+  {
+    title: 'Optimization options',
+    options: [
+      'opt-approx',
+      'opt-exact',
+      'opt-max-iters',
+      'opt-f-rel-tol',
+      'opt-f-abs-tol',
+      'opt-x-rel-tol',
+      'opt-x-abs-tol',
+      'rel-error-threshold'
+    ]
+  },
+  {
+    title: 'Advanced options',
+    options: [
+      'intermediate-opt',
+      'const-approx-real-vars',
+      'unique-indices',
+      'print-hex-floats',
+      'print-opt-lower-bounds'
+    ]
+  }
+];
