@@ -1,61 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import { Form, Row, Col, Collapse } from 'react-bootstrap';
 
-import { optionInfo, optionGroups } from './config_options';
+import { optionInfo, optionGroups, defaultValues } from './config_options';
 
-const BoolOption = ({label, initValue = false}) => {
-  const [value, setValue] = useState(initValue);
+const BoolOption = ({name, label, value, dispatch}) => {
   return (
     <Form.Switch 
       id={`id-${label}`}
       checked={value}
-      onChange={(e) => setValue(e.target.checked)}
+      onChange={(e) => dispatch({name, value: e.target.checked})}
       label={label}
     />
   );
 }
 
-const BoolOption2 = ({label, initValue = false}) => {
-  const [value, setValue] = useState(initValue);
-  return (
-    <Form.Group as={Row} className="align-items-center my-0" controlId={`id-${label}`}>
-      <Form.Label column xs="auto">{label}</Form.Label>
-      <Col xs="auto">
-        <Form.Switch 
-          id={`id-${label}`}
-          checked={value}
-          onChange={(e) => setValue(e.target.checked)}
-        />
-      </Col>
-    </Form.Group>
-  );
-}
+// const BoolOption2 = ({label, initValue = false}) => {
+//   const [value, setValue] = useState(initValue);
+//   return (
+//     <Form.Group as={Row} className="align-items-center my-0" controlId={`id-${label}`}>
+//       <Form.Label column xs="auto">{label}</Form.Label>
+//       <Col xs="auto">
+//         <Form.Switch 
+//           id={`id-${label}`}
+//           checked={value}
+//           onChange={(e) => setValue(e.target.checked)}
+//         />
+//       </Col>
+//     </Form.Group>
+//   );
+// }
 
-const SelectOption = ({label, values, names = values}) => {
+const StringOption = ({name, label, value, dispatch}) => {
   return (
     <Form.Group as={Row} className="align-items-center my-0 w-100" controlId={`id-${label}`}>
       <Form.Label column xs="4">{label}</Form.Label>
       <Col xs="8" className="px-1">
-        <Form.Control as="select" size="sm" custom>
-          {values.map((v, i) => <option key={i} values={v}>{names[i]}</option>)}
+        <Form.Control size="sm"
+          id={`id-${label}`}
+          value={value}
+          onChange={(e) => dispatch({name, value: e.target.value})}
+          />
+      </Col>
+    </Form.Group>  
+  );
+}
+
+const SelectOption = ({name, label, values, names = values, value, dispatch}) => {
+  return (
+    <Form.Group as={Row} className="align-items-center my-0 w-100" controlId={`id-${label}`}>
+      <Form.Label column xs="4">{label}</Form.Label>
+      <Col xs="8" className="px-1">
+        <Form.Control as="select" size="sm" custom
+          value={value}
+          onChange={(e) => dispatch({name, value: e.target.value})}
+        >
+          {values.map((v, i) => <option key={i} value={v}>{names[i]}</option>)}
         </Form.Control>
       </Col>
     </Form.Group>
   );
 }
 
-const NumericOption = ({label, min, max, step = 1, initValue = min}) => {
-  const [value, setValue] = useState(initValue);
+const NumericOption = ({name, label, min, max, step = 1, value, dispatch}) => {
   return (
     <Form.Group as={Row} className="align-items-center my-0 w-100" controlId={`id-${label}`}>
       <Form.Label column xs="4">{label}</Form.Label>
-      <Col xs="4" className="align-self-end px-1">
+      <Col xs="4" className="px-1 pt-2">
         <Form.Control type="range" size="sm" custom
           min={min}
           max={max}
           step={step}
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => dispatch({name, value: e.target.value})}
         />
       </Col>
       <Col xs="4" className="px-1">
@@ -63,8 +79,9 @@ const NumericOption = ({label, min, max, step = 1, initValue = min}) => {
           step={step}
           min={min}
           max={max}
-          onChange={(e) => e.target.validity.valid && setValue(e.target.value)}
-          value={value}/>
+          value={value}
+          onChange={(e) => e.target.validity.valid && dispatch({name, value: e.target.value})}
+        />
       </Col>
     </Form.Group>
   );
@@ -91,22 +108,37 @@ const OptionGroup = ({initShow = false, title, children}) => {
   );
 }
 
-function createOption(name, option) {
+function optionsReducer(state, action) {
+  return {...state, [action.name]: action.value};
+}
+
+function createOption(name, option, state, dispatch) {
   const label = option.label || name;
   const key = name;
+  const value = typeof state[name] === 'undefined' ? defaultValues[name] : state[name];
   if (option.values) {
-    return <SelectOption key={key} label={label} values={option.values} names={option.valueNames}/>
+    return <SelectOption key={key} name={name} label={label} 
+              value={value}
+              dispatch={dispatch}
+              values={option.values} 
+              names={option.valueNames}/>
   }
   switch (option.type) {
     case 'bool':
-      return <BoolOption key={key} label={label}/>;
+      return <BoolOption key={key} name={name} label={label} value={value} dispatch={dispatch}/>;
+    case 'string':
+      return <StringOption key={key} name={name} label={label} value={value} dispatch={dispatch}/>;
     case 'int':
-      return <NumericOption key={key} label={label} 
+      return <NumericOption key={key} name={name} label={label} 
+                value={value}
+                dispatch={dispatch}
                 min={option.min || 0}
                 max={typeof option.max === 'undefined' ? 2**32 - 1 : option.max}
                 step={option.step || 1}/>
     case 'float':
-      return <NumericOption key={key} label={label}
+      return <NumericOption key={key} name={name} label={label}
+                value={value}
+                dispatch={dispatch}
                 min={option.min || 0}
                 max={typeof option.max === 'undefined' ? 1e9 : option.max}
                 step={option.step || 1e-2}/>
@@ -114,9 +146,10 @@ function createOption(name, option) {
 }
 
 const ConfigControls = ({className = '', ...props}) => {
+  const [state, dispatch] = useReducer(optionsReducer, {});
   const groups = optionGroups.map(g => 
     <OptionGroup key={g.title} title={g.title} initShow={g.initShow}>
-      { g.options.map(name => createOption(name, optionInfo[name])) }
+      { g.options.map(name => createOption(name, optionInfo[name], state, dispatch)) }
     </OptionGroup>
   );
   return (

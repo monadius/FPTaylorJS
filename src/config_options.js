@@ -1,20 +1,5 @@
 import { default_config } from './default_config';
 
-export function parseConfig(cfg) {
-  const options = {};
-  for (let line of cfg.split('\n')) {
-    line = line.trim();
-    if (!line.includes('=') || line.startsWith('#')) continue;
-    const xs = line.split('=');
-    const param = xs[0].trim();
-    const value = xs.slice(1).join('=').trim();
-    options[param] = value;
-  }
-  return options;
-}
-
-export const defaultValues = Object.freeze(parseConfig(default_config));
-
 export const optionInfo = {
   'debug': {
     label: 'Print debug information',
@@ -139,31 +124,31 @@ export const optionInfo = {
   'opt-f-rel-tol': {
     type: 'float',
     min: 0,
-    max: 1e5,
-    step: 1e-8
+    max: 1,
+    step: 1e-3
   },
   'opt-f-abs-tol': {
     type: 'float',
     min: 0,
-    max: 1e5,
-    step: 1e-8
+    max: 1,
+    step: 1e-3
   },
   'opt-x-rel-tol': {
     type: 'float',
     min: 0,
-    max: 1e5,
-    step: 1e-8
+    max: 1,
+    step: 1e-3
   },
   'opt-x-abs-tol': {
     type: 'float',
     min: 0,
-    max: 1e5,
-    step: 1e-8
+    max: 1,
+    step: 1e-3
   },
   'opt-max-iters': {
     type: 'int',
     min: 0,
-    max: 5e7
+    max: 1e7
   },
   'opt-timeout': {
     type: 'int',
@@ -171,9 +156,32 @@ export const optionInfo = {
     max: 1e6
   },
   'develop': {
+    label: 'Use experimental features',
     type: 'bool'
   }
 };
+
+export function parseConfig(cfg) {
+  const options = {};
+  for (let line of cfg.split('\n')) {
+    line = line.trim();
+    if (!line.includes('=') || line.startsWith('#')) continue;
+    const xs = line.split('=');
+    const param = xs[0].trim();
+    let value = xs.slice(1).join('=').trim();
+    if (typeof optionInfo[param] !== 'undefined') {
+      switch (optionInfo[param].type) {
+        case 'bool': value = (value === 'true'); break;
+        case 'int': value = Math.round(value); break;
+        case 'float': value = +value; break;
+      }
+    }
+    options[param] = value;
+  }
+  return options;
+}
+
+export const defaultValues = Object.freeze(parseConfig(default_config));
 
 export const optionGroups = [
   {
@@ -208,8 +216,8 @@ export const optionGroups = [
     title: 'Optimization options',
     initShow: false,
     options: [
-      'opt-approx',
       'opt-exact',
+      'opt-approx',
       'opt-max-iters',
       'opt-f-rel-tol',
       'opt-f-abs-tol',
@@ -225,8 +233,9 @@ export const optionGroups = [
       'intermediate-opt',
       'const-approx-real-vars',
       'unique-indices',
+      'develop',
       'print-hex-floats',
-      'print-opt-lower-bounds'
+      'print-opt-lower-bounds',
     ]
   }
 ];
