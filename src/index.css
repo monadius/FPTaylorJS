@@ -50,6 +50,10 @@ body {
   border-top: 0;
 }
 
+.result-row {
+  cursor: pointer;
+}
+
 .gutter {
   z-index: 10;
 }
@@ -85,6 +89,7 @@ body {
 
 .option-group-header:hover {
   background-color: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
 }
 
 .option-group:first-child > .option-group-header {
