@@ -208,6 +208,7 @@ class Results extends React.PureComponent {
           columns={ this.columns }
           columnToggle={{toggles: this.state.toggles}}
           bootstrap4 hover
+          rowClasses="result-row"
           // classes="table-borderless"
           bordered={ false }
           headerWrapperClasses="border-0"

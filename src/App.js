@@ -8,6 +8,8 @@ import Header from './Header';
 import OutputPane from './OutputPane'
 import InputPane from './InputPane'
 
+import { default_config } from './default_config';
+
 const transformResult = (() => {
   let id = 0;
   return (data) => ({
@@ -46,7 +48,7 @@ class App extends React.Component {
       const worker = new Worker('fptaylor.js');
       worker.onmessage = this.onWorkerMessage.bind(this);
       worker.onerror = this.onWorkerError.bind(this);
-      worker.postMessage({input, config});
+      worker.postMessage({input, config, defaultcfg: default_config});
       this.setState(() => ({worker: worker, outputLog: []}));
     }
   }
