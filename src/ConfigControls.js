@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Row, Col, Collapse } from 'react-bootstrap';
 
+import { optionInfo, optionGroups } from './config_options';
+
 const BoolOption = ({label, initValue = false}) => {
   const [value, setValue] = useState(initValue);
   return (
@@ -29,13 +31,13 @@ const BoolOption2 = ({label, initValue = false}) => {
   );
 }
 
-const SelectOption = ({label, values}) => {
+const SelectOption = ({label, values, names = values}) => {
   return (
     <Form.Group as={Row} className="align-items-center my-0 w-100" controlId={`id-${label}`}>
       <Form.Label column xs="4">{label}</Form.Label>
       <Col xs="8" className="px-1">
         <Form.Control as="select" size="sm" custom>
-          {values.map((v, i) => <option key={i}>{v}</option>)}
+          {values.map((v, i) => <option key={i} values={v}>{names[i]}</option>)}
         </Form.Control>
       </Col>
     </Form.Group>
@@ -73,14 +75,14 @@ const OptionGroup = ({initShow = false, title, children}) => {
   return (
     <div className="option-group">
       <div 
-        className="px-3 py-2 option-group-header"
+        className="px-3 py-2 option-group-header font-weight-bold"
         onClick={() => setShow(!show)}
       >
         {title}
       </div>
       <Collapse in={show}>
         <div>
-          <div className="p-2">
+          <div className="pl-3 pr-1 py-1">
             {children}
           </div>
         </div>
@@ -89,21 +91,37 @@ const OptionGroup = ({initShow = false, title, children}) => {
   );
 }
 
+function createOption(name, option) {
+  const label = option.label || name;
+  const key = name;
+  if (option.values) {
+    return <SelectOption key={key} label={label} values={option.values} names={option.valueNames}/>
+  }
+  switch (option.type) {
+    case 'bool':
+      return <BoolOption key={key} label={label}/>;
+    case 'int':
+      return <NumericOption key={key} label={label} 
+                min={option.min || 0}
+                max={typeof option.max === 'undefined' ? 2**32 - 1 : option.max}
+                step={option.step || 1}/>
+    case 'float':
+      return <NumericOption key={key} label={label}
+                min={option.min || 0}
+                max={typeof option.max === 'undefined' ? 1e9 : option.max}
+                step={option.step || 1e-2}/>
+  }
+}
+
 const ConfigControls = ({className = '', ...props}) => {
+  const groups = optionGroups.map(g => 
+    <OptionGroup key={g.title} title={g.title} initShow={g.initShow}>
+      { g.options.map(name => createOption(name, optionInfo[name])) }
+    </OptionGroup>
+  );
   return (
     <Form className={"px-0 py-0 " + className}>
-      <OptionGroup title="General options" initShow={true}>
-        <BoolOption label="Compute Absolute Error" initValue={props.absError}/>
-        <BoolOption label="Compute Relative Error" initValue={props.relError}/>
-        <BoolOption label="Compute ULP Error (experimental)" initValue={props.ulpError}/>
-      </OptionGroup>
-      <OptionGroup title="Output options" initShow={true}>
-        <SelectOption label="Output verbosity" values={['Main results', 'Important results', 'Debug', 'All']}/>
-        <NumericOption label="Print precision" min="1" max="20" initValue={5}/>
-      </OptionGroup>
-      <OptionGroup title="Optimization options">
-        <NumericOption label="opt-x-abs-tol" min="0" max="1e3" step="1e-10" initValue={0.1}/>
-      </OptionGroup>
+      { groups }
     </Form>
   );
 }

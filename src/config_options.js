@@ -49,7 +49,7 @@ export const optionInfo = {
     type: 'bool'
   },
   'ulp-error': {
-    label: 'Compute ULP error',
+    label: 'Compute ULP error (experimental)',
     type: 'bool'
   },
   'rel-error-threshold': {
@@ -178,6 +178,7 @@ export const optionInfo = {
 export const optionGroups = [
   {
     title: 'General options',
+    initShow: true,
     options: [
       'abs-error',
       'rel-error',
@@ -188,14 +189,16 @@ export const optionGroups = [
   },
   {
     title: 'Output options',
+    initShow: true,
     options: [
-      'verbosity',
       'debug',
+      'verbosity',
       'print-precision'
     ]
   },
   {
     title: 'Input options',
+    initShow: false,
     options: [
       'default-var-type',
       'default-rnd'
@@ -203,6 +206,7 @@ export const optionGroups = [
   },
   {
     title: 'Optimization options',
+    initShow: false,
     options: [
       'opt-approx',
       'opt-exact',
@@ -216,6 +220,7 @@ export const optionGroups = [
   },
   {
     title: 'Advanced options',
+    initShow: false,
     options: [
       'intermediate-opt',
       'const-approx-real-vars',
