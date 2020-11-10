@@ -2,19 +2,7 @@ import React, { useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import Chart from './ResultChart';
 
-function interval(a, b) {
-  return (a + b) / 2;
-}
-
-function floor_power2(x) {
-  if (x < 0) return -floor_power2(-x);
-  if (x === 0 || isNaN(x) || !isFinite(x)) return x;
-  let e = Math.max(Math.floor(Math.log2(x)) + 1, -1023);
-  x *= 2 ** (-e);
-  for (; x < 0.5; x *= 2, e -= 1);
-  for (; x >= 1; x *= 0.5, e += 1);
-  return x === 0.5 ? 2 ** (e - 2) : 2 ** (e - 1);
-}
+import Func from './fptaylor_functions';
 
 function createData(foo, dom, samples = 500) {
   const [a, b] = dom || [0, 1];
@@ -45,7 +33,7 @@ const ResultRow = ({row, update, data}) => {
     const chartData = newData[type + 'ChartData'];
     if (show && row[errModelField] && row[errModelField].expr) {
       if (!chartData || !chartData.length) {
-        const f = eval(`(${row[errModelField].expr})`);
+        const f = Function('M', `return (${row[errModelField].expr})`)(Func);
         newData[type + 'ChartData'] = createData(f, row[errModelField].dom, 500);
       }
     }
