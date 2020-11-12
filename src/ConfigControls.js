@@ -145,8 +145,8 @@ function createOption(name, option, state, dispatch) {
   }
 }
 
-const ConfigControls = ({className = '', ...props}) => {
-  const [state, dispatch] = useReducer(optionsReducer, {});
+const ConfigControls = ({className = '', state, dispatch, ...props}) => {
+  // const [state, dispatch] = useReducer(optionsReducer, {});
   const groups = optionGroups.map(g => 
     <OptionGroup key={g.title} title={g.title} initShow={g.initShow}>
       { g.options.map(name => createOption(name, optionInfo[name], state, dispatch)) }

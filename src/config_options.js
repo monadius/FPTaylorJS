@@ -46,7 +46,7 @@ export const optionInfo = {
   'default-var-type': {
     label: 'Default type of variables',
     type: 'string',
-    values: ['float16', 'float32', 'float64', 'float128']
+    values: ['real', 'float16', 'float32', 'float64', 'float128']
   },
   'default-rnd': {
     label: 'Default type of rounding',
@@ -171,17 +171,31 @@ export function parseConfig(cfg) {
     let value = xs.slice(1).join('=').trim();
     if (typeof optionInfo[param] !== 'undefined') {
       switch (optionInfo[param].type) {
-        case 'bool': value = (value === 'true'); break;
-        case 'int': value = Math.round(value); break;
-        case 'float': value = +value; break;
+        case 'bool': value = (value === 'true' ? true : value === 'false' ? false : undefined); break;
+        case 'int': value = isNaN(value) ? undefined : Math.round(value); break;
+        case 'float': value = isNaN(value) ? undefined : +value; break;
       }
     }
-    options[param] = value;
+    if (typeof value !== 'undefined') {
+      options[param] = value;
+    }
   }
   return options;
 }
 
 export const defaultValues = Object.freeze(parseConfig(default_config));
+
+export function optionsToString(options, keepDefault = false) {
+  const result = [];
+  for (const name in options) {
+    const value = options[name];
+    if (!keepDefault && defaultValues[name] === value) {
+      continue;
+    }
+    result.push(`${name} = ${value}`);
+  }
+  return result.join('\n');
+}
 
 export const optionGroups = [
   {

@@ -6,6 +6,8 @@ import 'codemirror/lib/codemirror.css';
 
 import ConfigControls from './ConfigControls';
 
+import { optionInfo, defaultValues, parseConfig, optionsToString } from './config_options';
+
 class InputConfigCard extends React.Component {
   constructor(props) {
     super(props);
@@ -18,26 +20,55 @@ class InputConfigCard extends React.Component {
     else {
       this.state = {
         value: "",
-        selectionValue: "--",
+        selectionValue: "--"
       };
     }
     this.state.showText = false;
+    this.state.options = parseConfig(this.state.value);
   }
 
   get value() {
-    return this.state.value;
+    return this.state.showText ? 
+      this.state.value :
+      optionsToString(this.state.options);
   }
 
   onChange = (editor, data, value) => {
     this.setState({value: value, selectionValue: "--"});
   }
 
-  onSelectionChange = (event) => {
+  onExampleSelectionChange = (event) => {
     const value = event.target.value;
     this.setState({selectionValue: value});
     if (!isNaN(value) && this.props.examples && +value < this.props.examples.length) {
-      this.setState({value: this.props.examples[+value].data});
+      const text = this.props.examples[+value].data;
+      this.setState({
+        value: text,
+        options: parseConfig(text)
+      });
     }
+  }
+
+  onSwitchTextControls = (key) => {
+    if (key === 'text') {
+      this.setState(state => ({
+        value: optionsToString(state.options),
+        showText: true
+      }));
+    }
+    else {
+      this.setState(state => ({
+        options: parseConfig(state.value),
+        showText: false
+      }));
+    }
+  }
+
+  dispatchOptions = ({name, value}) => {
+    this.setState(state => {
+      const newOptions = {...state.options, [name]: value};
+      return {options: newOptions, selectionValue: "--"};
+    });
   }
 
   render() {
@@ -53,7 +84,7 @@ class InputConfigCard extends React.Component {
               <Form.Label htmlFor={examplesId} className="ml-auto mr-2">Examples</Form.Label>
               <Form.Control id={examplesId} as="select"
                 value={this.state.selectionValue}
-                onChange={this.onSelectionChange}
+                onChange={this.onExampleSelectionChange}
                 size="sm" custom>
                 <option value="--">--</option>
                 {options}
@@ -78,13 +109,17 @@ class InputConfigCard extends React.Component {
                 onChange={(editor, data, value) => {}}
               />
             }
-            <ConfigControls className={showText ? "d-none" : ""}/>
+            <ConfigControls 
+              className={showText ? "d-none" : ""}
+              state={this.state.options}
+              dispatch={this.dispatchOptions}
+            />
           </Card.Body>
           <Card.Footer className="py-1">
             <Nav variant="pills"
               className="justify-content-end"
               activeKey={showText ? 'text' : 'controls'}
-              onSelect={(key) => this.setState({showText: key === 'text'})}
+              onSelect={this.onSwitchTextControls}
             >
               <Nav.Item>
                 <Nav.Link eventKey="text" className="py-0">Text</Nav.Link>
