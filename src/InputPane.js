@@ -42,14 +42,14 @@ const InputPane = React.memo(({isRunning, onRunOrStop}) => {
         cursor="row-resize"
         style={{height: 'calc(100% - 2.4rem)'}}
       >
-        <div className="pb-0">
+        <div className="" style={{paddingBottom: 2}}>
           <InputCard id="input" ref={inputRef}
             className="h-100"
             cmMode="fptaylor"
             examples={inputExamples}
             title="Input"/>
         </div>
-        <div className="pb-2">
+        <div className="pb-2" style={{paddingTop: 2}}>
           <InputConfigCard id="config" ref={configRef}
             className="h-100"
             cmMode="fptaylor-config"
