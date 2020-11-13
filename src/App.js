@@ -23,6 +23,11 @@ const transformResult = (() => {
   });
 })();
 
+const transformOutput = (() => {
+  let id = 0;
+  return (obj) => ({...obj, id: id++});
+})();
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -65,7 +70,7 @@ class App extends React.Component {
       }));
     }
     else {
-      this.setState(state => ({outputLog: [...state.outputLog, e.data]}));
+      this.setState(state => ({outputLog: [...state.outputLog, transformOutput(e.data)]}));
     }
   }
 
