@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import Chart from './ResultChart';
 
-import Func from './fptaylor_functions';
+import Func from './fptaylor-functions';
 
 function createData(foo, dom, samples = 500) {
   const [a, b] = dom || [0, 1];
@@ -33,6 +33,7 @@ const ResultRow = ({row, update, data}) => {
     const chartData = newData[type + 'ChartData'];
     if (show && row[errModelField] && row[errModelField].expr) {
       if (!chartData || !chartData.length) {
+        /* eslint-disable no-new-func */
         const f = Function('M', `return (${row[errModelField].expr})`)(Func);
         newData[type + 'ChartData'] = createData(f, row[errModelField].dom, 500);
       }

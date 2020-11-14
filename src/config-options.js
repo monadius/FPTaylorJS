@@ -174,6 +174,7 @@ export function parseConfig(cfg) {
         case 'bool': value = (value === 'true' ? true : value === 'false' ? false : undefined); break;
         case 'int': value = isNaN(value) ? undefined : Math.round(value); break;
         case 'float': value = isNaN(value) ? undefined : +value; break;
+        default: break;
       }
     }
     if (typeof value !== 'undefined') {

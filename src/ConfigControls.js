@@ -1,7 +1,7 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState } from 'react';
 import { Form, Row, Col, Collapse } from 'react-bootstrap';
 
-import { optionInfo, optionGroups, defaultValues } from './config_options';
+import { optionInfo, optionGroups, defaultValues } from './config-options';
 
 const BoolOption = ({name, label, value, dispatch}) => {
   return (
@@ -62,11 +62,12 @@ const SelectOption = ({name, label, values, names = values, value, dispatch}) =>
 }
 
 const NumericOption = ({name, label, min, max, step = 1, value, dispatch}) => {
+  const id = `id-${label}`;
   return (
-    <Form.Group as={Row} className="align-items-center my-0 w-100" controlId={`id-${label}`}>
-      <Form.Label column xs="4">{label}</Form.Label>
+    <Form.Group as={Row} className="align-items-center my-0 w-100">
+      <Form.Label column xs="4" htmlFor={id}>{label}</Form.Label>
       <Col xs="4" className="px-1 pt-2">
-        <Form.Control type="range" size="sm" custom
+        <Form.Control type="range" size="sm" custom id={id}
           min={min}
           max={max}
           step={step}
@@ -75,7 +76,7 @@ const NumericOption = ({name, label, min, max, step = 1, value, dispatch}) => {
         />
       </Col>
       <Col xs="4" className="px-1">
-        <Form.Control type="number" size="sm"
+        <Form.Control type="number" size="sm" id={`id2-${label}`}
           step={step}
           min={min}
           max={max}
@@ -108,9 +109,9 @@ const OptionGroup = ({initShow = false, title, children}) => {
   );
 }
 
-function optionsReducer(state, action) {
-  return {...state, [action.name]: action.value};
-}
+// function optionsReducer(state, action) {
+//   return {...state, [action.name]: action.value};
+// }
 
 function createOption(name, option, state, dispatch) {
   const label = option.label || name;
@@ -142,6 +143,8 @@ function createOption(name, option, state, dispatch) {
                 min={option.min || 0}
                 max={typeof option.max === 'undefined' ? 1e9 : option.max}
                 step={option.step || 1e-2}/>
+    default:
+      return null;
   }
 }
 
