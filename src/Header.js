@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 import { Navbar, Modal, Nav } from 'react-bootstrap';
+import { Link, useHistory } from 'react-router-dom';
+
+import { useQuery } from './hooks';
 
 const credits = [
   ['React', 'https://reactjs.org/'],
@@ -10,13 +13,14 @@ const credits = [
   ['CodeMirror', 'https://codemirror.net/'],
   ['react-codemirror2', 'https://github.com/scniro/react-codemirror2'],
   ['Recharts', 'https://recharts.org/en-US'],
-  ['Split.js', 'https://split.js.org/']
+  ['Split.js', 'https://split.js.org/'],
+  ['React Router', 'https://reactrouter.com/']
 ];
 
 const createLink = (text, href) =>
   <a href={ href } target="_blank" rel="noopener noreferrer">{ text }</a>;
 
-const InfoModal = (props) => {
+const InfoModal = React.memo((props) => {
   return (
     <Modal {...props}>
       <Modal.Header closeButton>
@@ -42,19 +46,28 @@ const InfoModal = (props) => {
       </Modal.Body>
     </Modal>
   );
-}
+});
+
+const toObject = { search: "?about=1" };
 
 const Header = React.memo((props) => {
-  const [showInfo, changeShowInfo] = useState(false);
+  const showInfo = !!useQuery().get('about');
+  const history = useHistory();
+  const onHide = useCallback(() => history.replace({search: ""}), [history]);
+
   return (
     <>
       <Navbar bg="dark" variant="dark" className="py-0" style={{height: props.height}}>
-        <Navbar.Brand href="#info" onClick={changeShowInfo.bind(null, true)}>FPTaylor JS</Navbar.Brand>
+        <Navbar.Brand as={Link}
+          to={toObject}
+        >
+          FPTaylor JS
+        </Navbar.Brand>
         <Nav activeKey="" className="justify-content-end flex-fill">
           <Nav.Link active={false} href="https://github.com/monadius/FPTaylorJS" target="_blank" rel="noopener noreferrer">GitHub</Nav.Link>
         </Nav>
       </Navbar>
-      <InfoModal show={showInfo} onHide={changeShowInfo.bind(null, false)}/>
+      <InfoModal show={showInfo} onHide={onHide}/>
     </>
   );
 });
