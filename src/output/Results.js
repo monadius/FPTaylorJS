@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { Button, ButtonGroup, ButtonToolbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
@@ -16,7 +16,7 @@ const cellStyle = {
 const sortFunc = (a, b, order) =>
   order === 'asc' ? a - b : b - a;
 
-const columns = [{
+const columnsInfo = [{
   dataField: 'name',
   text: 'name',
   sort: true,
@@ -52,140 +52,130 @@ const columns = [{
   style: cellStyle
 }];
 
+const Results = React.memo((props) => {
+  const [sortField, setSortField] = useState(null);
+  const [sortOrder, setSortOrder] = useState(null);
+  const [toggles, setToggles] = useState(() => 
+    columnsInfo.reduce((r, c) => {
+      r[c.dataField] = (props.initHidden || [])[c.dataField] ? false : true;
+      return r;
+    }, {}));
+  const [selected, setSelected] = useState([]);
+  const [hidden, setHidden] = useState([]);
+  const [rowData, setRowData] = useState({});
 
+  const handleSort = useCallback((field, order) => {
+    setSortField(field);
+    setSortOrder(order);
+  }, []);
 
+  const columns = useMemo(() => columnsInfo.map(c => ({...c, onSort: handleSort})), [handleSort]);
 
-class Results extends React.PureComponent {
-  constructor(props) {
-    super(props);
+  const updateRowData = useCallback((row, data) => {
+    setRowData(rowData => ({...rowData, [row.id]: data}));
+  }, []);
 
-    this.columns = columns.map(c => ({...c, onSort: this.handleSort}))
-    const toggles = columns.reduce((r, c) => {
-        r[c.dataField] = (props.initHidden || [])[c.dataField] ? false : true;
-        return r;
-    }, {});
+  const handleColumnToggle = useCallback((columnName) => {
+    setToggles(toggles => ({...toggles, [columnName]: !toggles[columnName]}));
+  }, []);
 
-    this.state = {
-      sortField: null,
-      sortOrder: null,
-      toggles: toggles,
-      selected: [],
-      hidden: [],
-      rowData: {}
-    }
-  }
-
-  updateRowData = (row, data) => {
-    this.setState({rowData: {...this.state.rowData, [row.id]: data}});
-  }
-
-  handleColumnToggle = (columnName) => {
-    const { toggles } = this.state;
-    const newToggles = {...toggles, [columnName]: !toggles[columnName]};
-    this.setState({toggles: newToggles});
-  }
-
-  handleSort = (field, order) => {
-    this.setState({sortField: field, sortOrder: order});
-  }
-
-  handleOnSelect = (row, isSelected) => {
+  const handleOnSelect = useCallback((row, isSelected) => {
     if (isSelected) {
-      this.setState(state => ({selected: [...state.selected, row.id]}));
+      setSelected(selected => [...selected, row.id]);
     }
     else {
-      this.setState(state => ({selected: state.selected.filter(x => x !== row.id)}));
+      setSelected(selected => selected.filter(x => x !== row.id));
     }
-  }
+  }, []);
 
-  handleOnSelectAll = (isSelected, rows) => {
+  const handleOnSelectAll = useCallback((isSelected, rows) => {
     const ids = rows.map(r => r.id);
     if (isSelected) {
-      this.setState(() => ({selected: ids}));
+      setSelected(ids);
     }
     else {
-      this.setState(() => ({selected: []}));
+      setSelected([]);
     }
-  }
+  }, []);
 
-  reset = () => {
-    this.handleSort('-', 'asc');
-    this.setState(() => ({hidden: []}));
-  }
+  const reset = useCallback(() => {
+    handleSort('-', 'asc');
+    setHidden([]);
+  }, [handleSort]);
 
-  hideSelected = () => {
-    if (this.state.selected.length > 0) {
-      this.setState(state => ({hidden: [...state.hidden, ...state.selected], selected: []}));
+  const hideSelected = useCallback(() => {
+    if (selected.length > 0) {
+      setHidden(hidden => [...hidden, ...selected]);
+      setSelected([]);
     }
-  }
+  }, [selected]);
 
-  expandRow = {
+  const expandRow = {
     // To prevent the hover effect
     className: "bg-white",
     renderer: row => (
-      <ResultRow row={ row } update={ this.updateRowData } data={ this.state.rowData[row.id] } />
+      <ResultRow row={ row } update={ updateRowData } data={ rowData[row.id] } />
     )
-  }
+  };
 
-  render() {
-    const selectRow = {
-      mode: 'checkbox',
-      clickToExpand: true,
-      selected: this.state.selected,
-      onSelect: this.handleOnSelect,
-      onSelectAll: this.handleOnSelectAll
-    };
-    return (
-      <>
-        <ButtonToolbar className="mb-1 mt-2 justify-content-center">
-          <ButtonGroup className="mx-2">
-            <OverlayTrigger
-              placement="top"
-              delay={{show: 500}}
-              overlay={<Tooltip>Reset hidden rows and the sorting state</Tooltip>}
+  const selectRow = {
+    mode: 'checkbox',
+    clickToExpand: true,
+    selected: selected,
+    onSelect: handleOnSelect,
+    onSelectAll: handleOnSelectAll
+  };
+
+  return (
+    <>
+      <ButtonToolbar className="mb-1 mt-2 justify-content-center">
+        <ButtonGroup className="mx-2">
+          <OverlayTrigger
+            placement="top"
+            delay={{show: 500}}
+            overlay={<Tooltip>Reset hidden rows and the sorting state</Tooltip>}
+          >
+            <Button onClick={ reset }>
+              <IconTable width="1.3em" height="1.3em"/>
+            </Button>
+          </OverlayTrigger>
+          {/* <OverlayTrigger
+            placement="top"
+            delay={{show: 500}}
+            show={this.state.showHideTooltip}
+            onToggle={(nextShow) => this.setState({showHideTooltip: nextShow && this.state.selected.length > 0})}
+            overlay={<Tooltip>Hide selected rows</Tooltip>}
+          > */}
+            <Button onClick={ hideSelected } 
+              disabled={ !selected.length }
             >
-              <Button onClick={this.reset}>
-                <IconTable width="1.3em" height="1.3em"/>
-              </Button>
-            </OverlayTrigger>
-            {/* <OverlayTrigger
-              placement="top"
-              delay={{show: 500}}
-              show={this.state.showHideTooltip}
-              onToggle={(nextShow) => this.setState({showHideTooltip: nextShow && this.state.selected.length > 0})}
-              overlay={<Tooltip>Hide selected rows</Tooltip>}
-            > */}
-              <Button onClick={this.hideSelected} 
-                disabled={!this.state.selected.length}
-              >
-                <IconTrash width="1.3em" height="1.3em"/>
-              </Button>
-            {/* </OverlayTrigger> */}
-          </ButtonGroup>
-          <ColumnToggleGroup
-            columns={ this.columns }
-            onColumnToggle={ this.handleColumnToggle }
-            toggles={ this.state.toggles }
-          />
-        </ButtonToolbar>
-        <BootstrapTable
-          keyField='id'
-          data={ this.props.data }
-          columns={ this.columns }
-          columnToggle={{toggles: this.state.toggles}}
-          bootstrap4 hover
-          rowClasses="result-row"
-          // classes="table-borderless"
-          bordered={ false }
-          headerWrapperClasses="border-0"
-          sort={{dataField: this.state.sortField, order: this.state.sortOrder}}
-          hiddenRows={ this.state.hidden }
-          selectRow={ selectRow }
-          expandRow={ this.expandRow }
+              <IconTrash width="1.3em" height="1.3em"/>
+            </Button>
+          {/* </OverlayTrigger> */}
+        </ButtonGroup>
+        <ColumnToggleGroup
+          columns={ columns }
+          onColumnToggle={ handleColumnToggle }
+          toggles={ toggles }
         />
-      </>
-    );
-  }
-}
+      </ButtonToolbar>
+      <BootstrapTable
+        keyField='id'
+        data={ props.data }
+        columns={ columns }
+        columnToggle={{toggles: toggles}}
+        bootstrap4 hover
+        rowClasses="result-row"
+        // classes="table-borderless"
+        bordered={ false }
+        headerWrapperClasses="border-0"
+        sort={{dataField: sortField, order: sortOrder}}
+        hiddenRows={ hidden }
+        selectRow={ selectRow }
+        expandRow={ expandRow }
+      />
+    </>
+  );
+});
 
 export default Results;
