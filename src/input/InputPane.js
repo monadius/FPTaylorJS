@@ -8,7 +8,7 @@ import InputConfigCard from './InputConfigCard';
 import './cm-modes/config.js'
 import './cm-modes/fptaylor.js'
 
-import {configExamples, inputExamples} from './examples';
+import {configExamples, inputExamples} from '../examples';
 
 // const createGutter = (index, dir) => {
 //   const gutter = document.createElement('div');

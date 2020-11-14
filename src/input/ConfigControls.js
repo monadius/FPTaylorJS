@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Row, Col, Collapse } from 'react-bootstrap';
 
-import { optionInfo, optionGroups, defaultValues } from './config-options';
+import { optionInfo, optionGroups, defaultValues } from '../config-options';
 
 const BoolOption = ({name, label, value, dispatch}) => {
   return (

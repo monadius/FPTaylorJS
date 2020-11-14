@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import Chart from './ResultChart';
 
-import Func from './fptaylor-functions';
+import Func from '../fptaylor-functions';
 
 function createData(foo, dom, samples = 500) {
   const [a, b] = dom || [0, 1];

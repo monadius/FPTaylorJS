@@ -3,10 +3,10 @@ import { Card, Form, Nav } from 'react-bootstrap';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
 
-import Show from './Show';
+import Show from '../Show';
 import ConfigControls from './ConfigControls';
 
-import { parseConfig, optionsToString } from './config-options';
+import { parseConfig, optionsToString } from '../config-options';
 
 class InputConfigCard extends React.Component {
   constructor(props) {

@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Nav from 'react-bootstrap/Nav';
 import { useRouteMatch, Link } from 'react-router-dom';
 
-import Show from './Show';
+import Show from '../Show';
 import Output from './Output';
 import Results from './Results';
 

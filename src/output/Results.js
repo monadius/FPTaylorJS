@@ -7,10 +7,10 @@ import { Button, ButtonGroup, ButtonToolbar, OverlayTrigger, Tooltip } from 'rea
 import ResultRow from './ResultRow';
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import { ReactComponent as IconEye } from './icons/eye.svg';
-import { ReactComponent as IconEyeSlash } from './icons/eyeSlash.svg';
-import { ReactComponent as IconTable } from './icons/table.svg';
-import { ReactComponent as IconTrash } from './icons/trash.svg';
+import { ReactComponent as IconEye } from '../icons/eye.svg';
+import { ReactComponent as IconEyeSlash } from '../icons/eyeSlash.svg';
+import { ReactComponent as IconTable } from '../icons/table.svg';
+import { ReactComponent as IconTrash } from '../icons/trash.svg';
 
 const cellStyle = {
   whiteSpace: 'nowrap',

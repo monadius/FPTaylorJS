@@ -3,8 +3,8 @@ import Container from 'react-bootstrap/Container';
 import Split from 'react-split';
 
 import Header from './Header';
-import OutputPane from './OutputPane'
-import InputPane from './InputPane'
+import OutputPane from './output/OutputPane'
+import InputPane from './input/InputPane'
 
 import { default_config } from './default_config';
 
