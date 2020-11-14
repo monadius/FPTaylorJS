@@ -4,6 +4,7 @@ import { Card, Form, Nav, Tab } from 'react-bootstrap';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
 
+import Show from './Show';
 import ConfigControls from './ConfigControls';
 
 import { optionInfo, defaultValues, parseConfig, optionsToString } from './config_options';
@@ -109,11 +110,12 @@ class InputConfigCard extends React.Component {
                 onChange={(editor, data, value) => {}}
               />
             }
-            <ConfigControls 
-              className={showText ? "d-none" : ""}
-              state={this.state.options}
-              dispatch={this.dispatchOptions}
-            />
+            <Show show={!showText}>
+              <ConfigControls 
+                state={this.state.options}
+                dispatch={this.dispatchOptions}
+              />
+            </Show>
           </Card.Body>
           <Card.Footer className="py-1">
             <Nav variant="pills"
