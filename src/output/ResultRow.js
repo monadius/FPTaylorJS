@@ -21,7 +21,7 @@ const infoParams = [
   ['absErrorApproxStr', 'Absolute Error (approx)'],
   ['relErrorExactStr', 'Relative Error', 'relErrorModel'],
   ['relErrorApproxStr', 'Relative Error (approx)'],
-  ['ulpErrorExactStr', 'ULP Error'],
+  ['ulpErrorExactStr', 'ULP Error', 'ulpErrorModel'],
   ['ulpErrorApproxStr', 'ULP Error (approx)'],
   ['realBoundsStr', 'Bounds (without rounding)']
 ];
@@ -86,6 +86,7 @@ const ResultRow = ({row, update, data}) => {
       </pre> */}
       { data && data.absShow && <Chart title="Absolute Error" data={ data.absChartData }/> }
       { data && data.relShow && <Chart title="Relative Error" data={ data.relChartData }/> }
+      { data && data.ulpShow && <Chart title="ULP Error" data={ data.ulpChartData }/> }
     </>
   );
 }
