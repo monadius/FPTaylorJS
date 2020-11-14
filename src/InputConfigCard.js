@@ -7,7 +7,7 @@ import 'codemirror/lib/codemirror.css';
 import Show from './Show';
 import ConfigControls from './ConfigControls';
 
-import { optionInfo, defaultValues, parseConfig, optionsToString } from './config_options';
+import { parseConfig, optionsToString } from './config_options';
 
 class InputConfigCard extends React.Component {
   constructor(props) {

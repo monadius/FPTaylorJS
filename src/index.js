@@ -3,15 +3,19 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import {Test} from './Experiments';
+import { HashRouter as Router } from 'react-router-dom';
+
+// import {Test} from './Experiments';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App headerHeight="2.5rem" />
+    <Router>
+      <App headerHeight="2.5rem"/>
     {/* <Test/> */}
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
