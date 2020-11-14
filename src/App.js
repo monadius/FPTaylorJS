@@ -37,40 +37,36 @@ const App = (props) => {
   const [output, setOutput] = useState([]);
   const [worker, setWorker] = useState(null);
 
-  const stopWorker = useCallback(() => {
-    if (worker) {
-      worker.terminate();
-      setWorker(null);
-    }
-  }, []);
-
-  const onWorkerMessage = useCallback((e) => {
-    if (Array.isArray(e.data)) {
-      setWorker(null);
-      setResults(results => [...results, ...e.data.map(transformResult)]);
-    }
-    else {
-      setOutput(output => [...output, transformOutput(e.data)]);
-    }
-  }, []);
-
-  const onWorkerError = useCallback(() => {
-    stopWorker();
-  }, []);
-
   const onRunFPTaylor = useCallback((input, config) => {
+    const stopWorker = (worker) => {
+      if (worker) {
+        worker.terminate();
+        setWorker(null);
+      }
+    };
+
+    const onWorkerMessage = (e) => {
+      if (Array.isArray(e.data)) {
+        setWorker(null);
+        setResults(results => [...results, ...e.data.map(transformResult)]);
+      }
+      else {
+        setOutput(output => [...output, transformOutput(e.data)]);
+      }
+    };
+
     if (worker) {
-      stopWorker();
+      stopWorker(worker);
     }
     else {
       const worker = new Worker('fptaylor.js');
       worker.onmessage = onWorkerMessage;
-      worker.onerror = onWorkerError;
+      worker.onerror = stopWorker.bind(null, worker);
       worker.postMessage({input, config, defaultcfg: default_config});
       setWorker(worker);
       setOutput([]);
     }
-  }, []);
+  }, [worker]);
 
   const onClearResults = useCallback(() => {
     setResults([]);
