@@ -1,14 +1,11 @@
 import React from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
-import ToggleButton from 'react-bootstrap/ToggleButton'
 import { Button, ButtonGroup, ButtonToolbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
+import ColumnToggleGroup from './ColumnToggleGroup';
 import ResultRow from './ResultRow';
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import { ReactComponent as IconEye } from '../icons/eye.svg';
-import { ReactComponent as IconEyeSlash } from '../icons/eyeSlash.svg';
 import { ReactComponent as IconTable } from '../icons/table.svg';
 import { ReactComponent as IconTrash } from '../icons/trash.svg';
 
@@ -56,38 +53,7 @@ const columns = [{
 }];
 
 
-const CustomToggleList = ({
-  columns,
-  onColumnToggle,
-  toggles,
-  ...otherProps
-}) => {
-  const values = Object.keys(toggles).filter(v => v !== 'name' && toggles[v]);
-  return (
-    <ToggleButtonGroup 
-      {...otherProps}
-      type="checkbox"
-      value={values}
-    >
-      {
-        columns
-          .filter(column => column.dataField !== 'name')
-          .map(column => (
-            <ToggleButton variant="primary"
-              key={ column.dataField }
-              value={ column.dataField }
-              onChange={e => onColumnToggle(e.target.value)}
-            >
-              { column.text.split(' ')[0] }
-              { values.includes(column.dataField) ? 
-                  <IconEye className="ml-1"/> :
-                  <IconEyeSlash className="ml-1"/> }
-            </ToggleButton>
-          ))
-      }
-    </ToggleButtonGroup>
-  );
-}
+
 
 class Results extends React.PureComponent {
   constructor(props) {
@@ -196,7 +162,7 @@ class Results extends React.PureComponent {
               </Button>
             {/* </OverlayTrigger> */}
           </ButtonGroup>
-          <CustomToggleList
+          <ColumnToggleGroup
             columns={ this.columns }
             onColumnToggle={ this.handleColumnToggle }
             toggles={ this.state.toggles }

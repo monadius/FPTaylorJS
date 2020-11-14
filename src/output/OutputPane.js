@@ -1,6 +1,5 @@
 import React from 'react';
-import Card from 'react-bootstrap/Card';
-import Nav from 'react-bootstrap/Nav';
+import { Card, Nav } from 'react-bootstrap';
 import { useRouteMatch, Link } from 'react-router-dom';
 
 import Show from '../Show';
