@@ -5,6 +5,7 @@ import 'codemirror/lib/codemirror.css';
 
 import Show from '../Show';
 import ConfigControls from './ConfigControls';
+import Editor from './Editor';
 
 import { parseConfig, optionsToString } from '../config-options';
 
@@ -96,18 +97,7 @@ class InputConfigCard extends React.Component {
               // CodeMirror's layout is broken if its initial display style is 'none'
               // so we reinitialize it every time here
               showText && 
-              <CodeMirror
-                className="h-100"
-                value={this.state.value}
-                onBeforeChange={this.onChange}
-                options={{
-                  mode: this.props.cmMode,
-                  // theme: 'material',
-                  lineNumbers: true,
-                  tabSize: 2
-                }}
-                onChange={(editor, data, value) => {}}
-              />
+              <Editor className="h-100" value={this.state.value} onChange={this.onChange} mode={this.props.cmMode}/>
             }
             <Show show={!showText}>
               <ConfigControls 
