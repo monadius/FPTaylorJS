@@ -8,7 +8,7 @@ const BoolOption = ({name, label, value, dispatch}) => {
     <Form.Switch 
       id={`id-${label}`}
       checked={value}
-      onChange={(e) => dispatch({name, value: e.target.checked})}
+      onChange={(e) => dispatch({type: 'update-option', name, value: e.target.checked})}
       label={label}
     />
   );
@@ -38,7 +38,7 @@ const StringOption = ({name, label, value, dispatch}) => {
         <Form.Control size="sm"
           id={`id-${label}`}
           value={value}
-          onChange={(e) => dispatch({name, value: e.target.value})}
+          onChange={(e) => dispatch({type: 'update-option', name, value: e.target.value})}
           />
       </Col>
     </Form.Group>  
@@ -52,7 +52,7 @@ const SelectOption = ({name, label, values, names = values, value, dispatch}) =>
       <Col xs="8" className="px-1">
         <Form.Control as="select" size="sm" custom
           value={value}
-          onChange={(e) => dispatch({name, value: e.target.value})}
+          onChange={(e) => dispatch({type: 'update-option', name, value: e.target.value})}
         >
           {values.map((v, i) => <option key={i} value={v}>{names[i]}</option>)}
         </Form.Control>
@@ -72,7 +72,7 @@ const NumericOption = ({name, label, min, max, step = 1, value, dispatch}) => {
           max={max}
           step={step}
           value={value}
-          onChange={(e) => dispatch({name, value: e.target.value})}
+          onChange={(e) => dispatch({type: 'update-option', name, value: e.target.value})}
         />
       </Col>
       <Col xs="4" className="px-1">
@@ -81,7 +81,7 @@ const NumericOption = ({name, label, min, max, step = 1, value, dispatch}) => {
           min={min}
           max={max}
           value={value}
-          onChange={(e) => e.target.validity.valid && dispatch({name, value: e.target.value})}
+          onChange={(e) => e.target.validity.valid && dispatch({type: 'update-option', name, value: e.target.value})}
         />
       </Col>
     </Form.Group>
