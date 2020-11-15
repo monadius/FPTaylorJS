@@ -19,9 +19,9 @@ import {configExamples, inputExamples} from '../examples';
 const InputPane = React.memo(({isRunning, onRunOrStop}) => {
   const inputRef = useRef(null);
   const configRef = useRef(null);
-  const handleRun = useCallback(() => 
-    onRunOrStop(inputRef.current.value, configRef.current.value),
-    [onRunOrStop]);
+  const handleRun = useCallback(() => {
+    onRunOrStop(inputRef.current.value, configRef.current.value)
+  }, [onRunOrStop]);
   
   const runButton = isRunning ?
       <Button variant="danger" className="w-25 py-0 h-100" onClick={handleRun}>Stop</Button> :

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback, useImperativeHandle } from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 
@@ -6,82 +6,71 @@ import {Controlled as CodeMirror} from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
 // import 'codemirror/theme/material.css';
 
-class InputCard extends React.Component {
-  constructor(props) {
-    super(props);
-    if (props.examples && props.examples.length >= 1) {
-      this.state = {
-        value: props.examples[0].data,
-        selectionValue: "0"
-      };
+const InputCard = React.forwardRef(({examples = [], id, className, style, title, cmMode}, ref) => {
+  const [value, setValue] = useState(examples.length >= 1 ? examples[0].data : "");
+  const [selectionValue, setSelectionValue] = useState(examples.length >= 1 ? "0" : "--");
+
+  useImperativeHandle(ref, () => ({
+    get value() {
+      return value;
     }
-    else {
-      this.state = {
-        value: "",
-        selectionValue: "--"
-      };
-    }
-  }
+  }));
 
-  get value() {
-    return this.state.value;
-  }
+  const onChange = useCallback((editor, data, value) => {
+    setValue(value);
+    setSelectionValue("--");
+  }, []);
 
-  onChange = (editor, data, value) => {
-    this.setState({value: value, selectionValue: "--"});
-  }
-
-  onSelectionChange = (event) => {
+  const onSelectionChange = useCallback((event) => {
     const value = event.target.value;
-    this.setState({selectionValue: value});
-    if (!isNaN(value) && this.props.examples && +value < this.props.examples.length) {
-      this.setState({value: this.props.examples[+value].data});
+    setSelectionValue(value);
+    if (!isNaN(value) && examples && +value < examples.length) {
+      setValue(examples[+value].data);
     }
-  }
+  }, [examples]);
 
-  render() {
-    const examplesId = this.props.id + '-examples';
-    const options = (this.props.examples || []).map(({name}, i) =>
-      <option key={i} value={i}>{name}</option>);
-    return (
-      <Card className={this.props.className} style={this.props.style}>
-        <Card.Header className="py-1 pr-1">
-          <Form inline>
-            <span>{this.props.title}</span>
-            <Form.Label htmlFor={examplesId} className="ml-auto mr-2">Examples</Form.Label>
-            <Form.Control id={examplesId} as="select"
-              value={this.state.selectionValue}
-              onChange={this.onSelectionChange}
-              size="sm" custom>
-              <option value="--">--</option>
-              {options}
-            </Form.Control>
-          </Form>
-        </Card.Header>
-        <Card.Body className="p-0">
-          <CodeMirror
-            className="h-100"
-            value={this.state.value}
-            onBeforeChange={this.onChange}
-            options={{
-              mode: this.props.cmMode,
-              // theme: 'material',
-              lineNumbers: true,
-              tabSize: 2
-            }}
-            onChange={(editor, data, value) => {
-            }}
-          />
-          {/* <Form.Control id={this.props.id} as="textarea"
-            value={this.state.value}
-            onChange={this.onChange}
-            className="text-monospace h-100 w-100"
-            spellCheck={false}
-            style={{resize: "none", border: "none", outline: "none", fontSize: "87%"}}/> */}
-        </Card.Body>
-      </Card>
-    );
-  }
-}
+  const examplesId = id + '-examples';
+  const options = examples.map(({name}, i) =>
+    <option key={i} value={i}>{name}</option>);
+  
+  return (
+    <Card className={className} style={style}>
+      <Card.Header className="py-1 pr-1">
+        <Form inline>
+          <span>{title}</span>
+          <Form.Label htmlFor={examplesId} className="ml-auto mr-2">Examples</Form.Label>
+          <Form.Control id={examplesId} as="select"
+            value={selectionValue}
+            onChange={onSelectionChange}
+            size="sm" custom>
+            <option value="--">--</option>
+            {options}
+          </Form.Control>
+        </Form>
+      </Card.Header>
+      <Card.Body className="p-0">
+        <CodeMirror
+          className="h-100"
+          value={value}
+          onBeforeChange={onChange}
+          options={{
+            mode: cmMode,
+            // theme: 'material',
+            lineNumbers: true,
+            tabSize: 2
+          }}
+          // onChange={(editor, data, value) => {
+          // }}
+        />
+        {/* <Form.Control id={this.props.id} as="textarea"
+          value={this.state.value}
+          onChange={this.onChange}
+          className="text-monospace h-100 w-100"
+          spellCheck={false}
+          style={{resize: "none", border: "none", outline: "none", fontSize: "87%"}}/> */}
+      </Card.Body>
+    </Card>
+  );
+});
 
-export default InputCard;
+export default React.memo(InputCard);
