@@ -1,29 +1,29 @@
 {
   "files": {
-    "main.css": "/fptaylorjs/static/css/main.43e9a808.chunk.css",
-    "main.js": "/fptaylorjs/static/js/main.fd7aa988.chunk.js",
-    "main.js.map": "/fptaylorjs/static/js/main.fd7aa988.chunk.js.map",
-    "runtime-main.js": "/fptaylorjs/static/js/runtime-main.5cd13994.js",
-    "runtime-main.js.map": "/fptaylorjs/static/js/runtime-main.5cd13994.js.map",
-    "static/css/2.acc10e32.chunk.css": "/fptaylorjs/static/css/2.acc10e32.chunk.css",
-    "static/js/2.90ec8563.chunk.js": "/fptaylorjs/static/js/2.90ec8563.chunk.js",
-    "static/js/2.90ec8563.chunk.js.map": "/fptaylorjs/static/js/2.90ec8563.chunk.js.map",
-    "index.html": "/fptaylorjs/index.html",
-    "precache-manifest.dbb407311ba3939ff6552623868b5c33.js": "/fptaylorjs/precache-manifest.dbb407311ba3939ff6552623868b5c33.js",
-    "service-worker.js": "/fptaylorjs/service-worker.js",
-    "static/css/2.acc10e32.chunk.css.map": "/fptaylorjs/static/css/2.acc10e32.chunk.css.map",
-    "static/css/main.43e9a808.chunk.css.map": "/fptaylorjs/static/css/main.43e9a808.chunk.css.map",
-    "static/js/2.90ec8563.chunk.js.LICENSE.txt": "/fptaylorjs/static/js/2.90ec8563.chunk.js.LICENSE.txt",
-    "static/media/eye.25755a4d.svg": "/fptaylorjs/static/media/eye.25755a4d.svg",
-    "static/media/eyeSlash.ed90928c.svg": "/fptaylorjs/static/media/eyeSlash.ed90928c.svg",
-    "static/media/table.79c24903.svg": "/fptaylorjs/static/media/table.79c24903.svg",
-    "static/media/trash.d48003a0.svg": "/fptaylorjs/static/media/trash.d48003a0.svg"
+    "main.css": "/FPTaylorJS/static/css/main.43e9a808.chunk.css",
+    "main.js": "/FPTaylorJS/static/js/main.64a22225.chunk.js",
+    "main.js.map": "/FPTaylorJS/static/js/main.64a22225.chunk.js.map",
+    "runtime-main.js": "/FPTaylorJS/static/js/runtime-main.82399eb1.js",
+    "runtime-main.js.map": "/FPTaylorJS/static/js/runtime-main.82399eb1.js.map",
+    "static/css/2.acc10e32.chunk.css": "/FPTaylorJS/static/css/2.acc10e32.chunk.css",
+    "static/js/2.90ec8563.chunk.js": "/FPTaylorJS/static/js/2.90ec8563.chunk.js",
+    "static/js/2.90ec8563.chunk.js.map": "/FPTaylorJS/static/js/2.90ec8563.chunk.js.map",
+    "index.html": "/FPTaylorJS/index.html",
+    "precache-manifest.09f30d6f8a82074c92716834e7e92565.js": "/FPTaylorJS/precache-manifest.09f30d6f8a82074c92716834e7e92565.js",
+    "service-worker.js": "/FPTaylorJS/service-worker.js",
+    "static/css/2.acc10e32.chunk.css.map": "/FPTaylorJS/static/css/2.acc10e32.chunk.css.map",
+    "static/css/main.43e9a808.chunk.css.map": "/FPTaylorJS/static/css/main.43e9a808.chunk.css.map",
+    "static/js/2.90ec8563.chunk.js.LICENSE.txt": "/FPTaylorJS/static/js/2.90ec8563.chunk.js.LICENSE.txt",
+    "static/media/eye.25755a4d.svg": "/FPTaylorJS/static/media/eye.25755a4d.svg",
+    "static/media/eyeSlash.ed90928c.svg": "/FPTaylorJS/static/media/eyeSlash.ed90928c.svg",
+    "static/media/table.79c24903.svg": "/FPTaylorJS/static/media/table.79c24903.svg",
+    "static/media/trash.d48003a0.svg": "/FPTaylorJS/static/media/trash.d48003a0.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.5cd13994.js",
+    "static/js/runtime-main.82399eb1.js",
     "static/css/2.acc10e32.chunk.css",
     "static/js/2.90ec8563.chunk.js",
     "static/css/main.43e9a808.chunk.css",
-    "static/js/main.fd7aa988.chunk.js"
+    "static/js/main.64a22225.chunk.js"
   ]
 }
