@@ -24,6 +24,7 @@ opt-exact = true
 opt-approx = false
 rel-error = true
 abs-error = false
+rel-error-threshold = 1e-7
 print-precision = 7
 verbosity = 1
 `
@@ -107,7 +108,7 @@ Expressions
   sine rnd64= x - (x*x*x)/6.0 + (x*x*x*x*x)/120.0 - (x*x*x*x*x*x*x)/5040.0;`
   },
   {
-    name: 'sqrt-add',
+    name: 'sqrt_add32',
     data: `Variables
     float32 x in [1.0,1000.0];
 
