@@ -54,8 +54,7 @@ Definitions
     3 * ((3*x1*x1 + 2*x2 - x1) / (x1*x1 + 1)));
 
 Expressions
-  jet = r;
-`
+  jet = r;`
   },
   {
     name: 'doppler',
@@ -97,8 +96,7 @@ Definitions
 
 Expressions
   doppler3 = r;
-}
-`
+}`
   },
   {
     name: 'sine',
@@ -106,8 +104,38 @@ Expressions
   real x in [-1.57079632679, 1.57079632679];
 
 Expressions
-  sine rnd64= x - (x*x*x)/6.0 + (x*x*x*x*x)/120.0 - (x*x*x*x*x*x*x)/5040.0;
-`
+  sine rnd64= x - (x*x*x)/6.0 + (x*x*x*x*x)/120.0 - (x*x*x*x*x*x*x)/5040.0;`
+  },
+  {
+    name: 'sqrt-add',
+    data: `Variables
+    float32 x in [1.0,1000.0];
+
+  Definitions
+    r rnd32= 1 / (sqrt(x + 1) + sqrt(x));
+
+  Expressions
+    sqrt_add = r;`
+  },
+  {
+    name: 'cosine',
+    data: `Variables
+  real x in [-1.5, 1.5];
+
+Expressions
+  cosine rnd64= 1 - (x*x) / 2 + (x*x*x*x) / 24 - (x*x*x*x*x*x)/720.0;`
+  },
+  {
+    name: 'hypot32',
+    data: `Variables
+  float32 x1 in [1, 100],
+  float32 x2 in [1, 100];
+
+Definitions
+  r rnd32= sqrt(x1 * x1 + x2 * x2);
+  
+Expressions
+  hypot32 = r;`
   },
   {
     name: 'hartman3',
