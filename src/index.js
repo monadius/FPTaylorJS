@@ -5,8 +5,6 @@ import * as serviceWorker from './serviceWorker';
 
 import { HashRouter as Router } from 'react-router-dom';
 
-// import {Test} from './Experiments';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
@@ -14,7 +12,6 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <App headerHeight="2.5rem"/>
-    {/* <Test/> */}
     </Router>
   </React.StrictMode>,
   document.getElementById('root')
