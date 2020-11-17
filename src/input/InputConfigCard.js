@@ -5,6 +5,8 @@ import Show from '../common/Show';
 import ConfigControls from './ConfigControls';
 import Editor from './Editor';
 import ExampleSelection from './ExampleSelection';
+import FileUploadButton from '../common/FileUploadButton';
+import FileDownloadButton from '../common/FileDownloadButton';
 
 import { parseConfig, optionsToString } from '../config-options';
 
@@ -25,6 +27,8 @@ const InputConfigCard = React.forwardRef(({examples = [], id, className, style, 
         return {...state, value: action.value};
       case 'update-value': 
         return {...state, value: action.value, selectionValue: '--'};
+      case 'sync-value':
+        return {...state, value: action.value, options: parseConfig(action.value)};
       case 'update-options': 
         return {...state, options: action.value};
       case 'update-option': 
@@ -45,11 +49,17 @@ const InputConfigCard = React.forwardRef(({examples = [], id, className, style, 
   const [state, dispatch] = useReducer(optionsReducer, examples, initState);
   const [showText, setShowText] = useState(false);
 
+  const getValue = () => showText ? state.value : optionsToString(state.options);
+
   useImperativeHandle(ref, () => ({
     get value() {
-      return showText ? state.value : optionsToString(state.options);
+      return getValue();
     }
   }));
+
+  const onLoadFile = useCallback((value) => {
+    dispatch({type: 'sync-value', value: value});
+  }, []);
 
   const onChange = useCallback((editor, data, value) => {
     dispatch({type: 'update-value', value: value});
@@ -77,6 +87,18 @@ const InputConfigCard = React.forwardRef(({examples = [], id, className, style, 
     <Card className={className} style={style}>
       <Card.Header className="py-1 pr-1 d-flex align-items-center">
         <span>{title}</span>
+        <FileUploadButton
+          className="ml-1 border-0 py-0 px-1"
+          onLoad={onLoadFile}
+          maxSize={50 * 1024}
+          tooltip="Select a file or drag and drop it into the editor"
+        />
+        <FileDownloadButton
+          className="ml-1 border-0 py-0 px-1"
+          value={getValue()}
+          name="config.txt"
+          tooltip="Save configuration in a file"
+        />
         <ExampleSelection id={examplesId}
           className="ml-auto"
           examples={examples}

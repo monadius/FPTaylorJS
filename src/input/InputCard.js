@@ -3,6 +3,8 @@ import Card from 'react-bootstrap/Card';
 
 import Editor from './Editor';
 import ExampleSelection from './ExampleSelection';
+import FileUploadButton from '../common/FileUploadButton';
+import FileDownloadButton from '../common/FileDownloadButton';
 
 const InputCard = React.forwardRef(({examples = [], id, className, style, title, cmMode}, ref) => {
   const [value, setValue] = useState(examples.length >= 1 ? examples[0].data : "");
@@ -33,6 +35,18 @@ const InputCard = React.forwardRef(({examples = [], id, className, style, title,
     <Card className={className} style={style}>
       <Card.Header className="py-1 pr-1 d-flex align-items-center">
         <span>{title}</span>
+        <FileUploadButton
+          className="ml-1 border-0 py-0 px-1"
+          onLoad={setValue}
+          maxSize={50 * 1024}
+          tooltip="Select a file or drag and drop it into the editor"
+        />
+        <FileDownloadButton
+          className="ml-1 border-0 py-0 px-1"
+          value={value}
+          name="input.txt"
+          tooltip="Save input in a file"
+        />
         <ExampleSelection id={examplesId}
           className="ml-auto"
           examples={examples}
