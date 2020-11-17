@@ -126,6 +126,8 @@ const Results = React.memo((props) => {
     onSelectAll: handleOnSelectAll
   };
 
+  const buttonsVariant = "outline-secondary";
+
   return (
     <>
       <ButtonToolbar className="mb-1 mt-2 justify-content-center">
@@ -133,9 +135,9 @@ const Results = React.memo((props) => {
           <OverlayTrigger
             placement="top"
             delay={{show: 500}}
-            overlay={<Tooltip>Reset hidden rows and the sorting state</Tooltip>}
+            overlay={<Tooltip>Reset the table state</Tooltip>}
           >
-            <Button onClick={ reset }>
+            <Button variant={ buttonsVariant } onClick={ reset }>
               <IconTable width="1.3em" height="1.3em"/>
             </Button>
           </OverlayTrigger>
@@ -146,7 +148,7 @@ const Results = React.memo((props) => {
             onToggle={(nextShow) => this.setState({showHideTooltip: nextShow && this.state.selected.length > 0})}
             overlay={<Tooltip>Hide selected rows</Tooltip>}
           > */}
-            <Button onClick={ hideSelected } 
+            <Button variant={ buttonsVariant } onClick={ hideSelected } 
               disabled={ !selected.length }
             >
               <IconTrash width="1.3em" height="1.3em"/>
@@ -154,6 +156,7 @@ const Results = React.memo((props) => {
           {/* </OverlayTrigger> */}
         </ButtonGroup>
         <ColumnToggleGroup
+          variant={ buttonsVariant }
           columns={ columns }
           onColumnToggle={ handleColumnToggle }
           toggles={ toggles }

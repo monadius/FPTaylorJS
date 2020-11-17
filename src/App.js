@@ -61,7 +61,10 @@ const App = (props) => {
     else {
       const worker = new Worker('fptaylor.js');
       worker.onmessage = onWorkerMessage;
-      worker.onerror = stopWorker.bind(null, worker);
+      worker.onerror = (e) => {
+        console.log(e);
+        stopWorker(worker);
+      }
       worker.postMessage({input, config, defaultcfg: default_config});
       setWorker(worker);
       setOutput([]);

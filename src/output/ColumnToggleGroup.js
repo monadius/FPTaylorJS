@@ -8,6 +8,7 @@ const ColumnToggleGroup = ({
   columns,
   onColumnToggle,
   toggles,
+  variant,
   ...otherProps
 }) => {
   const values = Object.keys(toggles).filter(v => v !== 'name' && toggles[v]);
@@ -21,7 +22,8 @@ const ColumnToggleGroup = ({
         columns
           .filter(column => column.dataField !== 'name')
           .map(column => (
-            <ToggleButton variant="primary"
+            <ToggleButton
+              variant={variant}
               key={ column.dataField }
               value={ column.dataField }
               onChange={e => onColumnToggle(e.target.value)}

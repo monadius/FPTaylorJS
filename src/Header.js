@@ -14,7 +14,8 @@ const credits = [
   ['react-codemirror2', 'https://github.com/scniro/react-codemirror2'],
   ['Recharts', 'https://recharts.org/en-US'],
   ['Split.js', 'https://split.js.org/'],
-  ['React Router', 'https://reactrouter.com/']
+  ['React Router', 'https://reactrouter.com/'],
+  ['FileSaver.js', 'https://github.com/eligrey/FileSaver.js'],
 ];
 
 const createLink = (text, href) =>
