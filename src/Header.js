@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Navbar, Modal, Nav } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 
-import { useQuery } from './hooks';
+import { useQuery } from './common/hooks';
 
 const credits = [
   ['React', 'https://reactjs.org/'],

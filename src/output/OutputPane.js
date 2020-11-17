@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Nav } from 'react-bootstrap';
 import { useRouteMatch, Link } from 'react-router-dom';
 
-import Show from '../Show';
+import Show from '../common/Show';
 import Output from './Output';
 import Results from './Results';
 

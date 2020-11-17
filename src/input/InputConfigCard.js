@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useImperativeHandle, useReducer } from 'react';
 import { Card, Nav } from 'react-bootstrap';
 
-import Show from '../Show';
+import Show from '../common/Show';
 import ConfigControls from './ConfigControls';
 import Editor from './Editor';
 import ExampleSelection from './ExampleSelection';
