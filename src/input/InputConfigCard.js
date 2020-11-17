@@ -28,7 +28,7 @@ const InputConfigCard = React.forwardRef(({examples = [], id, className, style, 
       case 'update-value': 
         return {...state, value: action.value, selectionValue: '--'};
       case 'sync-value':
-        return {...state, value: action.value, options: parseConfig(action.value)};
+        return {...state, value: action.value, options: parseConfig(action.value), selectionValue: '--'};
       case 'update-options': 
         return {...state, options: action.value};
       case 'update-option': 
