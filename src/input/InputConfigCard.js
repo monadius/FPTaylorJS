@@ -97,7 +97,7 @@ const InputConfigCard = React.forwardRef(({examples = [], id, className, style, 
           className="ml-1 border-0 py-0 px-1"
           value={getValue()}
           name="config.txt"
-          tooltip="Save configuration in a file"
+          tooltip="Save configuration into a file"
         />
         <ExampleSelection id={examplesId}
           className="ml-auto"

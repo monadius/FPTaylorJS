@@ -45,7 +45,7 @@ const InputCard = React.forwardRef(({examples = [], id, className, style, title,
           className="ml-1 border-0 py-0 px-1"
           value={value}
           name="input.txt"
-          tooltip="Save input in a file"
+          tooltip="Save input into a file"
         />
         <ExampleSelection id={examplesId}
           className="ml-auto"
