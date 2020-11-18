@@ -1,31 +1,35 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "7362938e125c9b89ff7e70c2fe6b16ea",
+    "revision": "a8ed3e2d86a849352306942e2bb0db43",
     "url": "/FPTaylorJS/index.html"
   },
   {
-    "revision": "2db2d47a84e60fc24161",
+    "revision": "2324a717421ea26d3365",
     "url": "/FPTaylorJS/static/css/2.acc10e32.chunk.css"
   },
   {
-    "revision": "4dbe3b59337ebfea351e",
+    "revision": "f0bee43f25a22904b3fa",
     "url": "/FPTaylorJS/static/css/main.43e9a808.chunk.css"
   },
   {
-    "revision": "2db2d47a84e60fc24161",
-    "url": "/FPTaylorJS/static/js/2.90ec8563.chunk.js"
+    "revision": "2324a717421ea26d3365",
+    "url": "/FPTaylorJS/static/js/2.760cd94f.chunk.js"
   },
   {
     "revision": "7abd364fd4e4d3f957e0f4028eb8f02e",
-    "url": "/FPTaylorJS/static/js/2.90ec8563.chunk.js.LICENSE.txt"
+    "url": "/FPTaylorJS/static/js/2.760cd94f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "4dbe3b59337ebfea351e",
-    "url": "/FPTaylorJS/static/js/main.64a22225.chunk.js"
+    "revision": "f0bee43f25a22904b3fa",
+    "url": "/FPTaylorJS/static/js/main.70ef2538.chunk.js"
   },
   {
     "revision": "53a6b2dd47619d35b0f7",
     "url": "/FPTaylorJS/static/js/runtime-main.82399eb1.js"
+  },
+  {
+    "revision": "cb211d4a3ed5654e2716049525dcaa45",
+    "url": "/FPTaylorJS/static/media/download.cb211d4a.svg"
   },
   {
     "revision": "25755a4d2f1f2b17006b986f8fc4c283",
@@ -42,5 +46,9 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "d48003a0dfa1e753e0f694c5519c92c5",
     "url": "/FPTaylorJS/static/media/trash.d48003a0.svg"
+  },
+  {
+    "revision": "2a8aa4dda761ddc4902b68c9e7a98b00",
+    "url": "/FPTaylorJS/static/media/upload.2a8aa4dd.svg"
   }
 ]);

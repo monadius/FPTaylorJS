@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/FPTaylorJS/precache-manifest.09f30d6f8a82074c92716834e7e92565.js"
+  "/FPTaylorJS/precache-manifest.6f20809a0fa311a2e8c76dfe80d9be98.js"
 );
 
 self.addEventListener('message', (event) => {
