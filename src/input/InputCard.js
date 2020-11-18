@@ -7,8 +7,8 @@ import FileUploadButton from '../common/FileUploadButton';
 import FileDownloadButton from '../common/FileDownloadButton';
 
 const InputCard = React.forwardRef(({examples = [], id, className, style, title, cmMode}, ref) => {
-  const [value, setValue] = useState(examples.length >= 1 ? examples[0].data : "");
-  const [selectionValue, setSelectionValue] = useState(examples.length >= 1 ? "0" : "--");
+  const [value, setValue] = useState(examples.length >= 1 ? examples[0].data : '');
+  const [selectionValue, setSelectionValue] = useState(examples.length >= 1 ? '0' : '--');
 
   useImperativeHandle(ref, () => ({
     get value() {
@@ -16,10 +16,14 @@ const InputCard = React.forwardRef(({examples = [], id, className, style, title,
     }
   }));
 
-  const onChange = useCallback((editor, data, value) => {
+  const onChangeValue = useCallback((value) => {
     setValue(value);
-    setSelectionValue("--");
+    setSelectionValue('--');
   }, []);
+
+  const onChange = useCallback((editor, data, value) => {
+    onChangeValue(value);
+  }, [onChangeValue]);
 
   const onSelectionChange = useCallback((event) => {
     const value = event.target.value;
@@ -37,7 +41,7 @@ const InputCard = React.forwardRef(({examples = [], id, className, style, title,
         <span>{title}</span>
         <FileUploadButton
           className="ml-1 border-0 py-0 px-1"
-          onLoad={setValue}
+          onLoad={onChangeValue}
           maxSize={50 * 1024}
           tooltip="Select a file or drag and drop it into the editor"
         />
