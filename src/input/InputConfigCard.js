@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useImperativeHandle, useReducer } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Card, Nav } from 'react-bootstrap';
 
 import Show from '../common/Show';
@@ -7,12 +8,15 @@ import Editor from './Editor';
 import ExampleSelection from './ExampleSelection';
 import FileUploadButton from '../common/FileUploadButton';
 import FileDownloadButton from '../common/FileDownloadButton';
+import { getSearchParam } from '../common/utils';
 
 import { parseConfig, optionsToString } from '../config-options';
 
-function initState(examples) {
+function initState({location, examples}) {
   const hasExamples = examples && examples.length >= 1;
-  const value = hasExamples ? examples[0].data : '';
+  const initConfig = getSearchParam(location, 'config');
+  const value = initConfig ? initConfig :
+                hasExamples ? examples[0].data : '';
   return {
     value: value,
     selectionValue: hasExamples ? '0' : '--',
@@ -46,7 +50,8 @@ const InputConfigCard = React.forwardRef(({examples = [], id, className, style, 
 
   //const [value, setValue] = useState(examples.length >= 1 ? examples[0].data : "");
   //const [selectionValue, setSelectionValue] = useState(examples.length >= 1 ? "0" : "--");
-  const [state, dispatch] = useReducer(optionsReducer, examples, initState);
+  const location = useHistory().location;
+  const [state, dispatch] = useReducer(optionsReducer, {location, examples}, initState);
   const [showText, setShowText] = useState(false);
 
   const getValue = () => showText ? state.value : optionsToString(state.options);

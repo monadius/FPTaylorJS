@@ -1,14 +1,23 @@
 import React, { useState, useCallback, useImperativeHandle } from 'react';
+import { useHistory } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 
 import Editor from './Editor';
 import ExampleSelection from './ExampleSelection';
 import FileUploadButton from '../common/FileUploadButton';
 import FileDownloadButton from '../common/FileDownloadButton';
+import { getSearchParam } from '../common/utils';
 
 const InputCard = React.forwardRef(({examples = [], id, className, style, title, cmMode}, ref) => {
-  const [value, setValue] = useState(examples.length >= 1 ? examples[0].data : '');
-  const [selectionValue, setSelectionValue] = useState(examples.length >= 1 ? '0' : '--');
+  const location = useHistory().location;
+  const [value, setValue] = useState(() => {
+    const initInput = getSearchParam(location, 'input');
+    return initInput ? initInput :
+           examples.length >= 1 ? examples[0].data : '';
+  });
+  const [selectionValue, setSelectionValue] = useState(() =>
+    examples.length >= 1 && value === examples[0].data ? '0' : '--'
+  );
 
   useImperativeHandle(ref, () => ({
     get value() {
