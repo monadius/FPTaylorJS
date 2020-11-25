@@ -19,7 +19,7 @@ function initState({location, examples}) {
                 hasExamples ? examples[0].data : '';
   return {
     value: value,
-    selectionValue: hasExamples ? '0' : '--',
+    selectionValue: hasExamples && value === examples[0].data ? '0' : '--',
     options: parseConfig(value),
   };
 }
