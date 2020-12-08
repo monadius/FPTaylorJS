@@ -8,15 +8,24 @@ import InputPane from './input/InputPane'
 
 import { default_config } from './default_config';
 
+function getError(data, name) {
+  return data.errors.find(e => e.errorName === name) || {};
+}
+
+function getErrorExactApprox(data, name) {
+  return getError(data, name + ' (exact)').errorStr ||
+         getError(data, name + ' (approximate)').errorStr;
+}
+
 const transformResult = (() => {
   let id = 0;
   return (data) => ({
     id: id++,
     ...data,
     elapsedTime: data.elapsedTime.toFixed(2),
-    absError: data.absErrorExactStr || data.absErrorApproxStr || '-',
-    relError: data.relErrorExactStr || data.relErrorApproxStr || '-',
-    ulpError: data.ulpErrorExactStr || data.ulpErrorApproxStr || '-',
+    absError: getErrorExactApprox(data, 'absolute error') || '-',
+    relError: getErrorExactApprox(data, 'relative error') || '-',
+    ulpError: getErrorExactApprox(data, 'ULP error') || '-',
     bounds: data.realBounds
   });
 })();

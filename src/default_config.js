@@ -49,6 +49,9 @@ print-opt-lower-bounds = true
 ## If true then exact error bound values are printed as hexadecimal floating-point numbers.
 print-hex-floats = true
 
+## If true then second order errors are printed with other results.
+print-second-order-errors = false
+
 ## If true then absolute round-off error is computed.
 [short: abs]
 abs-error = true
@@ -103,10 +106,10 @@ intermediate-opt = false
 # May be useful to measure the error cancellation effect.
 unique-indices = false
 
-## If true then a proof certificate is created and saved.
+## [DEPRECATED] If true then a proof certificate is created and saved.
 proof-record = false
 
-## Path to a directory where proof certificates are saved.
+## [DEPRECATED] Path to a directory where proof certificates are saved.
 proof-dir = proofs
 
 #**************************

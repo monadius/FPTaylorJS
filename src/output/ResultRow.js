@@ -17,25 +17,25 @@ function createData(foo, dom, samples = 500) {
 }
 
 const infoParams = [
-  ['absErrorExactStr', 'Absolute Error', 'absErrorModel'],
-  ['absErrorApproxStr', 'Absolute Error (approx)'],
-  ['relErrorExactStr', 'Relative Error', 'relErrorModel'],
-  ['relErrorApproxStr', 'Relative Error (approx)'],
-  ['ulpErrorExactStr', 'ULP Error', 'ulpErrorModel'],
-  ['ulpErrorApproxStr', 'ULP Error (approx)'],
   ['realBoundsStr', 'Bounds (without rounding)']
 ];
 
+const fieldToText = v =>
+  typeof v === 'string' ? v :
+  typeof v === 'number' ? v.toString() :
+  Array.isArray(v)      ? `[${v.map(x => x.toString()).join(', ')}]` :
+  v.toString();
+
 const ResultRow = ({row, update, data}) => {
-  function handleShow(type, errModelField) {
+  function handleShow(type, errModel) {
     const newData = {...data};
     const show = newData[type + 'Show'] = !newData[type + 'Show'];
     const chartData = newData[type + 'ChartData'];
-    if (show && row[errModelField] && row[errModelField].expr) {
+    if (show && errModel && errModel.expr) {
       if (!chartData || !chartData.length) {
         /* eslint-disable no-new-func */
-        const f = Function('M', `return (${row[errModelField].expr})`)(Func);
-        newData[type + 'ChartData'] = createData(f, row[errModelField].dom, 500);
+        const f = Function('M', `return (${errModel.expr})`)(Func);
+        newData[type + 'ChartData'] = createData(f, errModel.dom, 500);
       }
     }
     update(row, newData);
@@ -43,27 +43,14 @@ const ResultRow = ({row, update, data}) => {
 
   const info = [];
 
-  function addInfo(field, name, errModelField) {
+  function addInfo(field, name) {
     if (row[field]) {
       const v = row[field];
-      const text = typeof v === 'string' ? v :
-                   typeof v === 'number' ? v.toString() :
-                   Array.isArray(v) ? `[${v.map(x => x.toString()).join(', ')}]` :
-                   v.toString();
+      const text = fieldToText(v);
       if (text && text !== '[-inf, +inf]') {
-        let plotButton = null;
-        if (errModelField && row[errModelField]) {
-          const type = errModelField.slice(0, 3);
-          const handle = handleShow.bind(null, type, errModelField);
-          const visible = (data || {})[type + 'Show'];
-          plotButton = 
-            <Button onClick={ handle } variant="success" className="py-0">
-              { visible ? "Hide" : "Plot" }
-            </Button>;
-        }
         info.push(
           <tr key={ field } className="bg-white">
-            <td>{ name } { plotButton }</td>
+            <td>{ name }</td>
             <td>{ text }</td>
           </tr>);
       }
@@ -71,7 +58,31 @@ const ResultRow = ({row, update, data}) => {
     return info;
   }
 
+  function addErrorInfo(error) {
+    const v = error.errorStr;
+    if (v) {
+      const text = fieldToText(v);
+      let plotButton = null;
+      if (error.errorModel) {
+        const type = error.errorName.slice(0, 3).toLowerCase();
+        const handle = handleShow.bind(null, type, error.errorModel);
+        const visible = (data || {})[type + 'Show'];
+        plotButton = 
+          <Button onClick={ handle } variant="success" className="py-0">
+            { visible ? "Hide" : "Plot" }
+          </Button>;
+      }
+      info.push(
+        <tr key={ error.errorName } className="bg-white">
+          <td>{ error.errorName } { plotButton }</td>
+          <td>{ text }</td>
+        </tr>);
+    }
+    return info;
+  }
+
   infoParams.forEach(args => addInfo(...args));
+  row.errors.forEach(addErrorInfo);
 
   return (
     <>
