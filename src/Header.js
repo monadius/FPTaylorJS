@@ -16,6 +16,7 @@ const credits = [
   ['Split.js', 'https://split.js.org/'],
   ['React Router', 'https://reactrouter.com/'],
   ['FileSaver.js', 'https://github.com/eligrey/FileSaver.js'],
+  ['Copy to clipboard', 'https://github.com/sudodoki/copy-to-clipboard'],
 ];
 
 const createLink = (text, href) =>
