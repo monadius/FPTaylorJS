@@ -1,19 +1,20 @@
 {
   "files": {
     "main.css": "/FPTaylorJS/static/css/main.43e9a808.chunk.css",
-    "main.js": "/FPTaylorJS/static/js/main.fa7474c2.chunk.js",
-    "main.js.map": "/FPTaylorJS/static/js/main.fa7474c2.chunk.js.map",
+    "main.js": "/FPTaylorJS/static/js/main.a8d9b207.chunk.js",
+    "main.js.map": "/FPTaylorJS/static/js/main.a8d9b207.chunk.js.map",
     "runtime-main.js": "/FPTaylorJS/static/js/runtime-main.82399eb1.js",
     "runtime-main.js.map": "/FPTaylorJS/static/js/runtime-main.82399eb1.js.map",
     "static/css/2.acc10e32.chunk.css": "/FPTaylorJS/static/css/2.acc10e32.chunk.css",
-    "static/js/2.34bb8c8d.chunk.js": "/FPTaylorJS/static/js/2.34bb8c8d.chunk.js",
-    "static/js/2.34bb8c8d.chunk.js.map": "/FPTaylorJS/static/js/2.34bb8c8d.chunk.js.map",
+    "static/js/2.0cac8768.chunk.js": "/FPTaylorJS/static/js/2.0cac8768.chunk.js",
+    "static/js/2.0cac8768.chunk.js.map": "/FPTaylorJS/static/js/2.0cac8768.chunk.js.map",
     "index.html": "/FPTaylorJS/index.html",
-    "precache-manifest.c0f6f6019dd88d8aeca82679948e96d9.js": "/FPTaylorJS/precache-manifest.c0f6f6019dd88d8aeca82679948e96d9.js",
+    "precache-manifest.ada9166f705523cea1ce93a90704857d.js": "/FPTaylorJS/precache-manifest.ada9166f705523cea1ce93a90704857d.js",
     "service-worker.js": "/FPTaylorJS/service-worker.js",
     "static/css/2.acc10e32.chunk.css.map": "/FPTaylorJS/static/css/2.acc10e32.chunk.css.map",
     "static/css/main.43e9a808.chunk.css.map": "/FPTaylorJS/static/css/main.43e9a808.chunk.css.map",
-    "static/js/2.34bb8c8d.chunk.js.LICENSE.txt": "/FPTaylorJS/static/js/2.34bb8c8d.chunk.js.LICENSE.txt",
+    "static/js/2.0cac8768.chunk.js.LICENSE.txt": "/FPTaylorJS/static/js/2.0cac8768.chunk.js.LICENSE.txt",
+    "static/media/clipboard.b5cccf0e.svg": "/FPTaylorJS/static/media/clipboard.b5cccf0e.svg",
     "static/media/download.cb211d4a.svg": "/FPTaylorJS/static/media/download.cb211d4a.svg",
     "static/media/eye.25755a4d.svg": "/FPTaylorJS/static/media/eye.25755a4d.svg",
     "static/media/eyeSlash.ed90928c.svg": "/FPTaylorJS/static/media/eyeSlash.ed90928c.svg",
@@ -24,8 +25,8 @@
   "entrypoints": [
     "static/js/runtime-main.82399eb1.js",
     "static/css/2.acc10e32.chunk.css",
-    "static/js/2.34bb8c8d.chunk.js",
+    "static/js/2.0cac8768.chunk.js",
     "static/css/main.43e9a808.chunk.css",
-    "static/js/main.fa7474c2.chunk.js"
+    "static/js/main.a8d9b207.chunk.js"
   ]
 }

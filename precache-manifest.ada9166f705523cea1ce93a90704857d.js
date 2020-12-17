@@ -1,31 +1,35 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9cc74be8d1abc664a700332a617f29c4",
+    "revision": "45682f4f5debdf118520856e690d3866",
     "url": "/FPTaylorJS/index.html"
   },
   {
-    "revision": "8578f4ae08c9e6c11984",
+    "revision": "7398239941ae25b52753",
     "url": "/FPTaylorJS/static/css/2.acc10e32.chunk.css"
   },
   {
-    "revision": "a8a71ba2ba04bfcbde37",
+    "revision": "4de83b4692af7287bcbc",
     "url": "/FPTaylorJS/static/css/main.43e9a808.chunk.css"
   },
   {
-    "revision": "8578f4ae08c9e6c11984",
-    "url": "/FPTaylorJS/static/js/2.34bb8c8d.chunk.js"
+    "revision": "7398239941ae25b52753",
+    "url": "/FPTaylorJS/static/js/2.0cac8768.chunk.js"
   },
   {
     "revision": "7abd364fd4e4d3f957e0f4028eb8f02e",
-    "url": "/FPTaylorJS/static/js/2.34bb8c8d.chunk.js.LICENSE.txt"
+    "url": "/FPTaylorJS/static/js/2.0cac8768.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "a8a71ba2ba04bfcbde37",
-    "url": "/FPTaylorJS/static/js/main.fa7474c2.chunk.js"
+    "revision": "4de83b4692af7287bcbc",
+    "url": "/FPTaylorJS/static/js/main.a8d9b207.chunk.js"
   },
   {
     "revision": "53a6b2dd47619d35b0f7",
     "url": "/FPTaylorJS/static/js/runtime-main.82399eb1.js"
+  },
+  {
+    "revision": "b5cccf0e901cf5bd90771acc5d871cba",
+    "url": "/FPTaylorJS/static/media/clipboard.b5cccf0e.svg"
   },
   {
     "revision": "cb211d4a3ed5654e2716049525dcaa45",
