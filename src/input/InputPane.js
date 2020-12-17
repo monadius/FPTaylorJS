@@ -53,8 +53,8 @@ const InputPane = React.memo(({isRunning, onRunOrStop}) => {
   }, [onRunOrStop]);
 
   const handleShare = useCallback(() => {
-    const input = encodeURIComponent(inputRef.current.value);
-    const config = encodeURIComponent(configRef.current.value);
+    const input = encodeURIComponent(inputRef.current.value || ' ');
+    const config = encodeURIComponent(configRef.current.value || ' ');
     setShareLink(`https://monadius.github.io/FPTaylorJS/#/?input=${input}&config=${config}`);
     setShowShare(true);
   }, []);
