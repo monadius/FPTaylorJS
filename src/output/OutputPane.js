@@ -33,7 +33,8 @@ const OutputPane = React.memo((props) => {
           </Nav.Item>
         </Nav>
       </Card.Header>
-      <Card.Body className="p-0">
+      {/* flexBasis: 0 - see https://github.com/philipwalton/flexbugs/issues/197 */}
+      <Card.Body className="p-0" style={{flexBasis: 0}}>
         <Show show={!showResults} className="h-100">
           <Output data={ props.output }/>
         </Show>

@@ -67,7 +67,7 @@ const InputCard = React.forwardRef(({examples = [], id, className, style, title,
           onChange={onSelectionChange}
         />
       </Card.Header>
-      <Card.Body className="p-0">
+      <Card.Body className="p-0" style={{flexBasis: 0}}>
         <Editor className="h-100" value={value} onChange={onChange} mode={cmMode}/>
       </Card.Body>
     </Card>

@@ -111,7 +111,7 @@ const InputConfigCard = React.forwardRef(({examples = [], id, className, style, 
           onChange={onSelectionChange}
         />
       </Card.Header>
-      <Card.Body className="p-0 overflow-auto">
+      <Card.Body className="p-0 overflow-auto" style={{flexBasis: 0}}>
         {
           // CodeMirror's layout is broken if its initial display style is 'none'
           // so we reinitialize it every time here
